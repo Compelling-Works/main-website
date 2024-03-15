@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  cw_website_database:
+    image: postgres
+    restart: always
+    ports:
+      - 5468:5432
+    container_name: cw-main-website-db
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - cw_website
+    environment:
+      - POSTGRES_USER=compelling_works
+      - POSTGRES_PASSWORD=compelling.works
+      - POSTGRES_DB=compelling_works
+      - PGDATA=/data/postgres
+    
+volumes:
+  postgres:
+  pgadmin_data:
+
+networks:
+  cw_website:
+
