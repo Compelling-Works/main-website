@@ -7,6 +7,7 @@ import {
   FileSpreadsheetIcon,
   Group,
   HeartHandshake,
+  Home,
   Newspaper,
   User,
   Users,
@@ -16,6 +17,11 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const routes = [
+  {
+    name: "Home",
+    path: "/admin",
+    icon: <Home />,
+  },
   {
     name: "Users",
     path: "/admin/users",
