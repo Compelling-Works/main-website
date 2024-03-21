@@ -19,14 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section>
-      <AdminNavbar />
-
-      <div className="flex gap-2 h-[200dvh]">
-        <AdminSidebar />
-        <main className="mt-[11svh]">{children}</main>
-      </div>
-      <Toaster />
-    </section>
+    <html lang="en">
+      <body className={inter.className}>
+        <AdminNavbar />
+        <div className="flex gap-2 h-[200dvh]">
+          <AdminSidebar />
+          <main className="mt-[11svh]">{children}</main>
+        </div>
+        <Toaster />
+      </body>
+    </html>
   );
 }

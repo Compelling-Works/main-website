@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   Book,
   FileSpreadsheetIcon,
@@ -12,7 +11,6 @@ import {
   User,
   Users,
 } from "lucide-react";
-import { getServerSession } from "next-auth";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -54,20 +52,13 @@ const routes = [
   },
 ];
 const AdminSidebar = () => {
-  // const session = await getServerSession();
-
-  // if (!session) {
-  //   return "Unauthenticated";
-  // }
   const pathname = usePathname();
 
   return (
     <nav className="sticky top-[10svh] h-[90svh] border-r-2  bg-gray-50 w-[350px]">
       <div className="flex justify-center items-center flex-col p-5">
         <User className="h-[150px] w-[200px]" />
-        {/* )} */}
-        {/* <p>{session.user?.name}</p>
-        <p>{session.user?.email}</p> */}
+
         <p>Test Admin</p>
         <p>testadmin@compelling.works</p>
       </div>

@@ -7,11 +7,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 import { db } from "@/database";
 
 import AdminMemberForm from "./add-user-form";
 import { User, users } from "@/database/schema";
-import { getUsers } from "@/data-access/users";
 import { deleteAdminUserAction } from "@/actions/delete-actions";
 import { toast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
@@ -43,7 +51,7 @@ async function Users() {
   return (
     <div className="mb-4 px-4">
       <AdminMemberForm />
-      {myUsers.length > 0 ? (
+      {myUsers && myUsers.length > 0 ? (
         <>
           <h2 className="text-center text-gray-500 font-semibold mt-4 mb-2 text-xl">
             Registered admins
