@@ -11,6 +11,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Compelling Works Limited - Admin",
   description: "This is the official compelling works limited website admin",
+  icons: {
+    icon: ["header-logo.png"],
+  },
 };
 
 export default function RootLayout({
