@@ -15,6 +15,12 @@ export const AdminUserFormSchema = z
       .trim()
       .min(6, "Password must be more than 6 characters long"),
     confirmPassword: z.string(),
+    image: z
+      .custom<FileList>(
+        (val) => val instanceof FileList,
+        "Admin user image is required"
+      )
+      .refine((files) => files.length > 0, "An image is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

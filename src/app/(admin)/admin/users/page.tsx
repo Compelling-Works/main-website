@@ -8,14 +8,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
 import { db } from "@/database";
 
 import AdminMemberForm from "./add-user-form";
@@ -23,8 +15,9 @@ import { User, users } from "@/database/schema";
 import { deleteAdminUserAction } from "@/actions/delete-actions";
 import { toast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
+import Image from "next/image";
 
-async function Users() {
+export default async function Users() {
   const myUsers = await db.select().from(users);
 
   async function clientAction(formData: FormData) {
@@ -52,7 +45,7 @@ async function Users() {
     <div className="mb-4 px-4">
       <AdminMemberForm />
       {myUsers && myUsers.length > 0 ? (
-        <>
+        <div className="w-[1200px] container">
           <h2 className="text-center text-gray-500 font-semibold mt-4 mb-2 text-xl">
             Registered admins
           </h2>
@@ -64,6 +57,7 @@ async function Users() {
             <TableHeader>
               <TableRow>
                 <TableHead>#</TableHead>
+                <TableHead>Image</TableHead>
                 <TableHead className="">Name</TableHead>
                 <TableHead className="">Username</TableHead>
 
@@ -75,6 +69,15 @@ async function Users() {
               {myUsers.map((member: User, index) => (
                 <TableRow key={member.id}>
                   <TableCell className="">{index + 1}</TableCell>
+                  <TableCell className="">
+                    <Image
+                      src={member.url}
+                      width="60"
+                      height="60"
+                      alt={member.name}
+                    />
+                  </TableCell>
+
                   <TableCell className="text-left">{member.name}</TableCell>
                   <TableCell className="text-left">{member.username}</TableCell>
 
@@ -91,7 +94,7 @@ async function Users() {
               ))}
             </TableBody>
           </Table>
-        </>
+        </div>
       ) : (
         <div className="mt-5 text-center">
           <h1 className="text-gray-700 text-2xl">
@@ -104,4 +107,3 @@ async function Users() {
   );
 }
 
-export default Users;

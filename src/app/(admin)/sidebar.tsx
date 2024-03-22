@@ -64,14 +64,14 @@ const AdminSidebar = () => {
       </div>
 
       <hr />
-      <div className="flex flex-col">
+      <div className="flex flex-col my-2">
         {routes.map((route) => {
           return (
             <Link
               key={route.name}
               href={route.path}
               className={cn(
-                "py-1.5 px-4 hover:text-blue-700 hover:bg-blue-200 hover:font-bold hover:cursor-pointer transition-colors duration-200 flex gap-5",
+                "py-3 px-4 hover:text-blue-700 hover:bg-blue-200 hover:font-bold hover:cursor-pointer transition-colors duration-200 flex gap-5",
                 {
                   "text-white font-bold bg-blue-700 hover:text-white hover:bg-blue-700":
                     pathname === route.path,
