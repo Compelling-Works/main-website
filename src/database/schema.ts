@@ -49,7 +49,7 @@ export const projects = pgTable("projects", {
   category: text("category").notNull(),
   description: text("description").notNull(),
   implementors: text("implementors").notNull(),
-  // images:
+  url: text("image_url").notNull(),
 });
 
 export type Project = typeof projects.$inferSelect;

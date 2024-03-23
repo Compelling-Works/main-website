@@ -58,47 +58,79 @@ export const addAdminUserAction = async (data: FormData) => {
 };
 
 export const addprojectAction = async (data: FormData) => {
-  const formData = Object.fromEntries(data); //convert data object into a regular javascript object
-  const parsedData = ProjectFormSchema.safeParse(formData); // check if that data is valid(matches what the schema expects)
-
-  if (!parsedData.success) {
-    return {
-      status: "error",
-      message: "Invalid form data",
-    };
-  }
+  const image = data.get("image") as File;
 
   try {
-    const result = await db
-      .insert(projects)
-      .values({
-        name: parsedData.data.name,
-        category: parsedData.data.category,
-        country: parsedData.data.country,
-        startDate: parsedData.data.startDate.toLocaleString(),
-        endDate: parsedData.data.endDate.toLocaleString(),
-        commissioningParty: parsedData.data.commissioningParty,
+    const checksum = await computeSHA256(image);
 
-        description: parsedData.data.description,
-        implementors: parsedData.data.implementors,
-      })
-      .returning()
-      .then((res) => res[0]);
+    const signedURL = await getSignedURL(image, checksum);
 
-    revalidatePath("/admin/projects");
+    const result = await saveImage(signedURL, image);
 
-    return {
-      status: "success",
-      code: 200,
-      message: `${result.name} created successfully`,
-    };
+    if (result.status === 200) {
+      const result = await db
+        .insert(projects)
+        .values({
+          name: data.get("name") as string,
+          category: data.get("category") as string,
+          country: data.get("country") as string,
+          startDate: (data.get("startDate") as string).toLocaleString(),
+          endDate: (data.get("endDate") as string).toLocaleString(),
+          commissioningParty: data.get("commissioningParty") as string,
+          url: signedURL.split("?")[0],
+          description: data.get("description") as string,
+          implementors: data.get("implementors") as string,
+        })
+        .returning()
+        .then((res) => res[0]);
+
+      revalidatePath("/admin/projects");
+
+      return {
+        status: "success",
+        code: 200,
+        message: `${result.name} created successfully`,
+      };
+    }
   } catch (error) {
     return {
       status: "error",
-      code: 401,
-      message: `Sorry, unable to create project. Please try again later!`,
+      message:
+        "Something went wrong. Unable to create project. Please try again later!",
     };
   }
+
+  // try {
+  //   const result = await db
+  //     .insert(projects)
+  //     .values({
+  //       name: parsedData.data.name,
+  //       category: parsedData.data.category,
+  //       country: parsedData.data.country,
+  //       startDate: parsedData.data.startDate.toLocaleString(),
+  //       endDate: parsedData.data.endDate.toLocaleString(),
+  //       commissioningParty: parsedData.data.commissioningParty,
+
+  //       description: parsedData.data.description,
+  //       implementors: parsedData.data.implementors,
+  //     })
+  //     .returning()
+  //     .then((res) => res[0]);
+
+  //   revalidatePath("/admin/projects");
+
+  //   return {
+  //     status: "success",
+  //     code: 200,
+  //     message: `${result.name} created successfully`,
+  //   };
+  // } catch (error) {
+  //   return {
+  //     status: "error",
+  //     code: 401,
+  //     message: `Sorry, unable to create project. Please try again later!`,
+  //   };
+  // }
 };
 
 export const addTeamMemberAction = async (formData: FormData) => {

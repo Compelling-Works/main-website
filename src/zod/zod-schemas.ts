@@ -29,6 +29,29 @@ export const AdminUserFormSchema = z
 
 export type AdminUserCreateSchemaType = z.output<typeof AdminUserFormSchema>;
 
+
+export const TeamMemberFormSchema = z.object({
+  name: z.string().trim().min(1, "member name is required"),
+  role: z.string().trim().min(1, "member role is required"),
+  category: z.string().trim().min(1, "member category is required"),
+  message: z.string().trim().min(1, "member category is required").optional(),
+  // bio: z.object({profile: z.string()}),
+  email: z
+    .string()
+    .trim()
+    .email("Enter a valid email address")
+    .endsWith("@compelling.works", "Invalid email address"),
+
+  image: z
+    .custom<FileList>(
+      (val) => val instanceof FileList,
+      "Admin user image is required"
+    )
+    .refine((files) => files.length > 0, "An image is required"),
+});
+
+export type TeamMemberFormSchemaType = z.output<typeof TeamMemberFormSchema>;
+
 export const ProjectFormSchema = z.object({
   name: z.string().trim().min(1, "Project name is required"),
   category: z.string().trim().min(1, "Project category is required"),
@@ -39,6 +62,12 @@ export const ProjectFormSchema = z.object({
     .trim()
     .min(1, "Project commissioning party are required"),
   description: z.string().trim().min(1, "Project description is required"),
+  image: z
+    .custom<FileList>(
+      (val) => val instanceof FileList,
+      "Project image is required"
+    )
+    .refine((files) => files.length > 0, "An image is required"),
   startDate: z.string().trim().min(1, "Project start date is required"),
   endDate: z.string().trim().min(1, "Project end date is required"),
 });

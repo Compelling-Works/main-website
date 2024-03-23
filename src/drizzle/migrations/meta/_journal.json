@@ -15,6 +15,20 @@
       "when": 1711122561517,
       "tag": "0001_dapper_centennial",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1711185301197,
+      "tag": "0002_wakeful_the_enforcers",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1711185379288,
+      "tag": "0003_round_aaron_stack",
+      "breakpoints": true
     }
   ]
 }

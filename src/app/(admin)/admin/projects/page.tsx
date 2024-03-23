@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import AddProjectForm from "./add-project-form";
 import { Project, projects } from "@/database/schema";
-import { getProjects } from "@/data-access/projects";
 import { deleteProjectAction } from "@/actions/delete-actions";
 import { toast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
