@@ -34,14 +34,18 @@ export const TeamMemberFormSchema = z.object({
   name: z.string().trim().min(1, "member name is required"),
   role: z.string().trim().min(1, "member role is required"),
   category: z.string().trim().min(1, "member category is required"),
-  message: z.string().trim().min(1, "member category is required").optional(),
-  // bio: z.object({profile: z.string()}),
-  email: z
+  message1: z.string().trim().optional(),
+  message2: z.string().trim().optional(),
+
+  bio: z.string().trim().min(1, "member bio information is required"),
+  education: z
     .string()
     .trim()
-    .email("Enter a valid email address")
-    .endsWith("@compelling.works", "Invalid email address"),
-
+    .min(1, "member education information is required"),
+  experience: z
+    .string()
+    .trim()
+    .min(1, "member working experience information is required"),
   image: z
     .custom<FileList>(
       (val) => val instanceof FileList,

@@ -144,35 +144,38 @@ export const addprojectAction = async (data: FormData) => {
 };
 
 export const addTeamMemberAction = async (formData: FormData) => {
-  const name = formData.get("name") as string;
-  const role = formData.get("role") as string;
-  const experience = formData.get("experience") as string;
-  const education = formData.get("education") as string;
-  const profile = formData.get("profile") as string;
+  const image = formData.get("image") as File;
+
+  // const experience = formData.get("experience") as string;
+  // const category = formData.get("experience") as string;
+
+  // const education = formData.get("education") as string;
+  // const profile = formData.get("bio") as string;
 
   const message1 = formData.get("message1") as string;
   const message2 = formData.get("message2") as string;
 
-  let message = null;
-  if (message1 && message2) {
-    message1.concat("2").concat(message2); // Then i will split this text based on '2' and use that when displaying the tope leadership message on the our-team page
-    message = message1;
-  }
+  // let message = null;
+  message1.concat(message2 ?? "");
+  // if (message1 && message2) {
+  //   message1.concat("2").concat(message2); // Then i will split this text based on '2' and use that when displaying the tope leadership message on the our-team page
+  //   message = message1;
+  // }
 
-  const category = formData.get("category") as string;
-  const image = formData.get("image") as File;
+  // const category = formData.get("category") as string;
+  // const image = formData.get("image") as File;
 
-  if (!name || !role || !experience || !education || !profile || !image) {
-    return {
-      status: "error",
-      message: "Sorry, team member creation failed. You have missing fields!",
-    };
-  }
+  // if (!name || !role || !experience || !education || !profile || !image) {
+  //   return {
+  //     status: "error",
+  //     message: "Sorry, team member creation failed. You have missing fields!",
+  //   };
+  // }
 
   const bio = {
-    education,
-    profile,
-    experience,
+    education: formData.get("education") as string,
+    profile: formData.get("bio") as string,
+    experience: formData.get("experience") as string,
   };
 
   try {
@@ -187,11 +190,11 @@ export const addTeamMemberAction = async (formData: FormData) => {
       const dbResult = await db
         .insert(teamMembers)
         .values({
-          name,
-          role,
+          name: formData.get("name") as string,
+          role: formData.get("role") as string,
           bio,
-          category,
-          message,
+          category: formData.get("category") as string,
+          message: message1,
           url: signedURL.split("?")[0],
         })
         .returning()

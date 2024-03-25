@@ -19,14 +19,55 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/use-toast";
-import FormButton from "@/components/shared/form-button";
 import { addTeamMemberAction } from "@/actions/create-actions";
+import {
+  TeamMemberFormSchema,
+  TeamMemberFormSchemaType,
+} from "@/zod/zod-schemas";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import { Loader } from "lucide-react";
 
 const TeamMemberForm = () => {
-  const [category, setCategory] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
-  const clientAction = async (formData: FormData) => {
+  const form = useForm<TeamMemberFormSchemaType>({
+    resolver: zodResolver(TeamMemberFormSchema),
+    defaultValues: {
+      name: "",
+      bio: "",
+      category: "",
+      education: "",
+      experience: "",
+      message1: "",
+      message2: "",
+      role: "",
+      image: undefined,
+    },
+  });
+
+  const fileRef = form.register("image");
+
+  async function onSubmit(data: TeamMemberFormSchemaType) {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("role", data.role);
+    formData.append("bio", data.bio);
+    formData.append("category", data.category);
+    formData.append("experience", data.experience);
+    formData.append("message1", data.message1 ?? "");
+    formData.append("message2", data.message2 ?? "");
+
+    formData.append("image", data.image[0]);
+
     try {
       const result = await addTeamMemberAction(formData);
 
@@ -35,6 +76,8 @@ const TeamMemberForm = () => {
         title: "User creation success",
         description: result?.message,
       });
+
+      form.reset();
     } catch (error) {
       toast({
         title: "Team member creation error",
@@ -42,136 +85,182 @@ const TeamMemberForm = () => {
           "Sorry, unable to add team member. Please try again later!",
         variant: "destructive",
       });
-      return;
     }
-  };
+  }
 
   return (
-    <>
+    <div className="w-[800px]">
       <Dialog open={modalOpen} onOpenChange={setModalOpen}>
         <DialogTrigger asChild>
           <Button>Add New</Button>
         </DialogTrigger>
-        <DialogContent className="w-[700px]">
+        <DialogContent className="w-[900px]">
           <DialogHeader>
             <DialogTitle className="text-center">
               Add a new team member
             </DialogTitle>
           </DialogHeader>
 
-          <form action={clientAction} className="min-h-[200px] w-full">
-            <div className="">
-              <Label htmlFor="terms">Name</Label>
-              <Input type="text" name="name" />
-              {/* <Input type="text" {...register("name")} /> */}
-              {/* {errors.name && (
-                <span className="text-red-600 text-xs">
-                  {errors.name.message}
-                </span>
-              )} */}
-            </div>
-            <div className="flex gap-2 items-center">
-              <div className="my-2 w-full">
-                <Label htmlFor="terms">Role</Label>
-                <Input className="w-full" type="text" name="role" />
-                {/* <Input className="w-full" type="text" {...register("role")} /> */}
-
-                {/* {errors.role && (
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className=" min-h-[200px]"
+            >
+              <div className="">
+                <Label htmlFor="terms">Name</Label>
+                <Input type="text" {...form.register("name")} />
+                {form.formState.errors.name && (
                   <span className="text-red-600 text-xs">
-                    {errors.role.message}
+                    {form.formState.errors.name.message}
                   </span>
-                )} */}
+                )}
               </div>
-              <div className="my-2 w-full">
-                <Label htmlFor="terms">Category</Label>
-                <Select onValueChange={(e) => setCategory(e)} name="category">
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a member category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Our Leadership">Leadership</SelectItem>
-                    <SelectItem value="Creative Team">Creative Team</SelectItem>
-                    <SelectItem value="Intern">Intern</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+              <div className="flex gap-2 items-center">
+                <div className="my-2 w-full">
+                  <Label htmlFor="terms">Role</Label>
 
-            {category === "Our Leadership" ? (
-              <>
-                <div className="mb-2 space-y-2">
-                  <Label htmlFor="terms">Message</Label>
-                  <Textarea
-                    placeholder="Enter here the first paragraph of the message from the team leaders"
-                    name="message1"
+                  <Input
+                    className="w-full"
+                    type="text"
+                    {...form.register("role")}
                   />
-                  <Textarea
-                    placeholder="Enter here the second paragraph of the message from the team leaders"
-                    name="message2"
+
+                  {form.formState.errors.role && (
+                    <span className="text-red-600 text-xs">
+                      {form.formState.errors.role.message}
+                    </span>
+                  )}
+                </div>
+                <div className="my-2 w-full">
+                  <Label htmlFor="terms">Category</Label>
+
+                  <Controller
+                    control={form.control}
+                    name="category"
+                    render={({ field }) => (
+                      <Select onValueChange={field.onChange}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your response" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Our Leadership">
+                            Leadership
+                          </SelectItem>
+                          <SelectItem value="Creative Team">
+                            Creative Team
+                          </SelectItem>
+                          <SelectItem value="Intern">Intern</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
                   />
                 </div>
-              </>
-            ) : (
-              ""
-            )}
-            <div className="mb-2 space-y-2">
-              <Label htmlFor="terms">Bio Data</Label>
-
-              <div>
-                <Textarea
-                  placeholder="Enter the team member profile information here..."
-                  name="profile"
-                  // {...register("profile")}
-                />
-                {/* {errors.profile && (
-                  <span className="text-red-600 text-xs">
-                    {errors.profile.message}
-                  </span>
-                )} */}
-              </div>
-              <div>
-                <Textarea
-                  placeholder="Enter the education background information here..."
-                  name="education"
-                  // {...register("education")}
-                />
-                {/* {errors.education && (
-                  <span className="text-red-600 text-xs">
-                    {errors.education.message}
-                  </span>
-                )} */}
               </div>
 
-              <div>
-                <Textarea
-                  placeholder="Enter the team member working experience here."
-                  name="experience"
-                  // {...register("experience")}
-                />
-                {/* {errors.experience && (
-                  <span className="text-red-600 text-xs">
-                    {errors.experience.message}
-                  </span>
-                )} */}
+              {form.getValues().category === "Our Leadership" && (
+                <div className="mb-2 space-y-1">
+                  <Label htmlFor="terms">Message</Label>
+                  <Textarea
+                    {...form.register("message1")}
+                    placeholder="Enter here the first paragraph of the message from the team leaders"
+                  />
+                  {form.formState.errors.message1 && (
+                    <span className="text-red-600 text-xs">
+                      {form.formState.errors.message1.message}
+                    </span>
+                  )}
+                  <Textarea
+                    {...form.register("message2")}
+                    placeholder="Enter here the second paragraph of the message from the team leaders"
+                  />
+
+                  {form.formState.errors.message2 && (
+                    <span className="text-red-600 text-xs">
+                      {form.formState.errors.message2.message}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              <div className="mb-2 space-y-2">
+                <Label htmlFor="terms">Bio Data</Label>
+
+                <div>
+                  <Textarea
+                    placeholder="Enter the team member profile information here..."
+                    {...form.register("bio")}
+                  />
+                  {form.formState.errors.bio && (
+                    <span className="text-red-600 text-xs">
+                      {form.formState.errors.bio.message}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <Textarea
+                    placeholder="Enter the education background information here..."
+                    {...form.register("education")}
+                  />
+                  {form.formState.errors.education && (
+                    <span className="text-red-600 text-xs">
+                      {form.formState.errors.education.message}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  <Textarea
+                    placeholder="Enter the team member working experience here."
+                    {...form.register("experience")}
+                  />
+                  {form.formState.errors.experience && (
+                    <span className="text-red-600 text-xs">
+                      {form.formState.errors.experience.message}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className="">
-              <Label htmlFor="terms">Image</Label>
-              <Input type="file" name="image" />
-              {/* <Input type="file" {...register("image")} /> */}
-              {/* {errors.image && (
-                <span className="text-red-600 text-xs">
-                  {errors.image.message}
-                </span>
-              )} */}
-            </div>
+              <div>
+                <Label>Team member image</Label>
 
-            <FormButton />
-          </form>
+                <FormField
+                  control={form.control}
+                  name="image"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormControl>
+                          <Input type="file" {...fileRef} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
+                />
+              </div>
+
+              <Button
+                disabled={form.formState.isSubmitting}
+                className={cn("w-full mt-2", {
+                  "disabled:bg-opacity-75 ": form.formState.isSubmitting,
+                })}
+                type="submit"
+              >
+                {form.formState.isSubmitting ? (
+                  <>
+                    <Loader className="size-4 animate-spin mr-2" />
+                    <span className="mr-3">Adding team member</span>
+                  </>
+                ) : (
+                  "Add team member"
+                )}
+              </Button>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 };
 
