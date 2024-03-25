@@ -60,45 +60,55 @@ export const addAdminUserAction = async (data: FormData) => {
 export const addprojectAction = async (data: FormData) => {
   const image = data.get("image") as File;
 
-  try {
-    const checksum = await computeSHA256(image);
+     const formatter = new Intl.DateTimeFormat("en-UK", {
+       dateStyle: "full",
+     });
 
-    const signedURL = await getSignedURL(image, checksum);
+     const _sd = new Date(data.get("startDate") as string).toLocaleDateString();
+     const _ed = new Date(data.get("endDate") as string).toLocaleDateString();
 
-    const result = await saveImage(signedURL, image);
+     const startDate = formatter.format(new Date(_sd));
+     const endDate = formatter.format(new Date(_ed));
 
-    if (result.status === 200) {
-      const result = await db
-        .insert(projects)
-        .values({
-          name: data.get("name") as string,
-          category: data.get("category") as string,
-          country: data.get("country") as string,
-          startDate: (data.get("startDate") as string).toLocaleString(),
-          endDate: (data.get("endDate") as string).toLocaleString(),
-          commissioningParty: data.get("commissioningParty") as string,
-          url: signedURL.split("?")[0],
-          description: data.get("description") as string,
-          implementors: data.get("implementors") as string,
-        })
-        .returning()
-        .then((res) => res[0]);
+     try {
+       const checksum = await computeSHA256(image);
 
-      revalidatePath("/admin/projects");
+       const signedURL = await getSignedURL(image, checksum);
 
-      return {
-        status: "success",
-        code: 200,
-        message: `${result.name} created successfully`,
-      };
-    }
-  } catch (error) {
-    return {
-      status: "error",
-      message:
-        "Something went wrong. Unable to create project. Please try again later!",
-    };
-  }
+       const result = await saveImage(signedURL, image);
+
+       if (result.status === 200) {
+         const result = await db
+           .insert(projects)
+           .values({
+             name: data.get("name") as string,
+             category: data.get("category") as string,
+             country: data.get("country") as string,
+             startDate,
+             endDate,
+             commissioningParty: data.get("commissioningParty") as string,
+             url: signedURL.split("?")[0],
+             description: data.get("description") as string,
+             implementors: data.get("implementors") as string,
+           })
+           .returning()
+           .then((res) => res[0]);
+
+         revalidatePath("/admin/projects");
+
+         return {
+           status: "success",
+           code: 200,
+           message: `${result.name} created successfully`,
+         };
+       }
+     } catch (error) {
+       return {
+         status: "error",
+         message:
+           "Something went wrong. Unable to create project. Please try again later!",
+       };
+     }
 
   // try {
   //   const result = await db

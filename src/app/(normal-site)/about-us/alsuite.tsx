@@ -73,25 +73,25 @@ const Alsuite = () => {
       <h4 className="my-2 text-xl">Companies that use Alsuite sofar</h4>
 
       <div className="flex justify-center items-center gap-4">
-        {/* <Image
-          src="/images/fowode.png"
+        <Image
+          src="/images/horizontal_logo.png"
           width={150}
           height={100}
-          alt="FOWODE logo"
-        /> */}
+          alt="Compelling works limited logo"
+        />
         <Image
           src="/images/mifumi.png"
           width={150}
           height={100}
           alt="FOWODE logo"
         />
-        {/* <Image
-          src="/images/mifumi-health-services.png"
+        <Image
+          src="/images/mifuhi-health-services.png"
           width={150}
           height={100}
-          alt="FOWODE logo"
+          alt="Mifumi health services logo"
         />
-        <Image
+        {/* <Image
           src="/images/obi-works.png"
           width={150}
           height={100}

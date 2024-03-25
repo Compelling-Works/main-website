@@ -28,10 +28,10 @@ async function Careers() {
       </div>
 
       <div className="px-3">
-        <h4 className="font-light mt-10 md:ml-[150px] md:text-3xl">
+        <h4 className="font-medium mt-10 md:ml-[150px] md:text-3xl">
           Job Openings
         </h4>
-
+        {/* 
         {ourJobs.length > 0 ? (
           <div className="grid space-y-2 gap-7 md:ml-[150px]">
             {ourJobs?.map((job: Job) => (
@@ -41,18 +41,18 @@ async function Careers() {
               </div>
             ))}
           </div>
-        ) : (
-          <p className="mt-3 md:ml-[150px] md:text-xl text-red-[300] flex ">
-            <span className="mr-2">There are currently no job openings</span>
-            <span>
-              <Frown />
-            </span>
-          </p>
-        )}
+        ) : ( */}
+        <p className="mt-3 md:ml-[150px] md:text-xl text-red-[300] flex ">
+          <span className="mr-2">There are currently no job openings</span>
+          <span>
+            <Frown />
+          </span>
+        </p>
+        {/* )} */}
       </div>
 
       <div className="px-3">
-        <h4 className="font-semibold mt-10 md:ml-[150px] md:text-3xl">
+        <h4 className="font-medium mt-10 md:ml-[150px] md:text-3xl">
           Digital Nomads Alliance (DNA) Platform
         </h4>
         <div className="mt-3 md:ml-[150px]">

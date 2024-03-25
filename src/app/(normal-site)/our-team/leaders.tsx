@@ -142,7 +142,7 @@ export default function Leaders({ leaders }: Leaders) {
       ) : (
         <div className="mt-5 text-center">
           <h1 className="text-gray-700 text-2xl">
-            No created leaders at the moment
+            Our leadership team is not yet updated
           </h1>
         </div>
       )}

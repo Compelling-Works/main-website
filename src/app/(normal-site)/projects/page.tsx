@@ -8,7 +8,7 @@ import { db } from "@/database";
 
 export default async function ProjectsPage() {
   const allProjects = await db.select().from(projects);
-  const mostRecent = allProjects.pop();
+  const mostRecent = allProjects?.shift();
 
   return (
     <>
@@ -20,75 +20,77 @@ export default async function ProjectsPage() {
         </div>
       </div>
 
+      {mostRecent && (
+        <div className="w-[1100px] container grid grid-cols-2 my-10 text-xl">
+          <div className="grid gap-3 w-[500px]">
+            <Image
+              src={mostRecent.url}
+              alt={mostRecent.name}
+              width={500}
+              height={400}
+            />
+
+            <h3 className="">
+              <span>Project name: </span>
+              <span className="text-blue-700">{mostRecent.name}</span>
+            </h3>
+
+            <p className="">
+              <span>Countries: </span>
+              <span className="text-blue-700">{mostRecent.country}</span>
+            </p>
+            <p className="">
+              <span>Commissioning party: </span>
+              <span className="text-blue-700">
+                {mostRecent.commissioningParty}
+              </span>
+            </p>
+          </div>
+
+          <div className="w-[600px]">
+            <p className="">
+              <span>Implementors: </span>
+              <span className="text-blue-700">{mostRecent.implementors}</span>
+            </p>
+            <p>
+              <span>Running from: </span>
+              <span className="text-blue-700 mr-3">{mostRecent.startDate}</span>
+            </p>
+
+            <p>
+              <span>To: </span>
+              <span className="text-blue-700">{mostRecent.endDate}</span>
+            </p>
+
+            <div className="grid gap-1 mt-3">
+              <p>Description</p>
+
+              <p className="text-wrap">{mostRecent.description}</p>
+            </div>
+          </div>
+        </div>
+      )}
+      <Separator className="my-10 container" />
+
       <div className="my-10">
         {allProjects.length > 0 ? (
           <>
-            <div className="md:w-[1000px] mx-auto">
-              <div className="grid md:grid-cols-2 gap-2 container">
-                <div>
-                  <div className="content">
-                    <Image
-                      src="/images/landing-image.jpg"
-                      width={400}
-                      height={700}
-                      alt="Image"
-                      className="rounded-lg w-full"
-                    />
-                    <div className="overlay text-left ">
-                      <h2 className=" text-white md:text-3xl">
-                        {mostRecent?.name}
-                      </h2>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="flex gap-4 text-md mt-1">
-                      Country:
-                      <span className="text-blue-700 mr-2">
-                        {mostRecent?.country}
-                      </span>
-                    </p>
-                    <p className="flex gap-4 text-md">
-                      Period:
-                      <span className="text-blue-700 mr-2">
-                        {mostRecent?.startDate} to {mostRecent?.endDate}
-                      </span>
-                    </p>
-                    <p className="text-md flex gap-2">
-                      Commissioning party:{" "}
-                      <span className="text-blue-700">
-                        {mostRecent?.commissioningParty}
-                      </span>
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="line-clamp-7">{mostRecent?.description}</p>
-                  <Button size={"sm"} className="mt-4">
-                    Read more
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            <Separator className="my-10 container" />
-
             {/* <Filters /> */}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 my-4 container">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-4 container">
               {allProjects?.map((project: Project) => (
                 <Card
                   key={project.id}
-                  className="p-0 rounded-md hover:scale-[102%] duration-100"
+                  className="rounded-md hover:scale-[102%] duration-100 max-w-[450px] max-h-[800px]"
                 >
                   <CardContent className="p-0">
                     <div className="content">
                       <Image
-                        src="/images/landing-image.jpg"
-                        width={400}
-                        height={500}
+                        src={project.url ?? "/images/landing-image.jpg"}
+                        width={450}
+                        height={400}
                         alt="Image"
-                        className="rounded-lg"
+                        className="rounded-lg p-2"
                       />
                       <div className="overlay text-left ">
                         <h2 className=" text-white md:text-3xl">
@@ -97,16 +99,22 @@ export default async function ProjectsPage() {
                       </div>
                     </div>
                     <div className="p-3">
-                      <p className="flex gap-4 text-md mt-1">
-                        Country:
+                      <p className="">
+                        <span>Country: </span>
                         <span className="text-blue-700 mr-2">
                           {project.country}
                         </span>
                       </p>
-                      <p className="flex gap-4 text-md">
-                        Period:
+                      <p className="">
+                        <span>From: </span>
                         <span className="text-blue-700 mr-2">
-                          {project.startDate} to {project.endDate}
+                          {project.startDate}
+                        </span>
+                      </p>
+                      <p>
+                        <span>To: </span>
+                        <span className="text-blue-700 mr-2">
+                          {project.endDate}
                         </span>
                       </p>
 
@@ -121,11 +129,11 @@ export default async function ProjectsPage() {
 
                       <p className="line-clamp-4">{project.description}</p>
 
-                      <div className="flex justify-center items-center">
+                      {/* <div className="flex justify-center items-center">
                         <Button size="sm" className="mt-2 mx-auto">
                           Read more
                         </Button>
-                      </div>
+                      </div> */}
                     </div>
                   </CardContent>
                 </Card>
