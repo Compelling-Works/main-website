@@ -15,7 +15,7 @@ export default async function TeamMemberPage({
 }: {
   params: { memberId: string };
 }) {
-  const id = params.memberId;
+  const id = params.memberId!;
 
   const teamMember = await db
     .select()

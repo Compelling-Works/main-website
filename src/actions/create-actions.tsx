@@ -308,7 +308,16 @@ export const addPartnerAction = async (formData: FormData) => {
 export const addJobOpenningAction = async (formData: FormData) => {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
-  const endDate = (formData.get("close-date") as string).toLocaleString();
+
+     const formatter = new Intl.DateTimeFormat("en-UK", {
+       dateStyle: "full",
+     });
+
+     const _ed = new Date(
+       formData.get("close-date") as string
+     ).toLocaleDateString();
+     const endDate = formatter.format(new Date(_ed));
+
   const pdf = formData.get("pdf") as File;
 
   if (!title || !description || !endDate || !pdf) {

@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DownloadButton from "./download-button";
 
-async function Careers() {
+export default async function Careers() {
   const ourJobs = await db.select().from(jobs);
 
   async function downloadPDF(url: string) {
@@ -27,28 +27,34 @@ async function Careers() {
         </div>
       </div>
 
-      <div className="px-3">
+      <div className="px-3 md:w-[1000px]">
         <h4 className="font-medium mt-10 md:ml-[150px] md:text-3xl">
           Job Openings
         </h4>
-        {/* 
-        {ourJobs.length > 0 ? (
-          <div className="grid space-y-2 gap-7 md:ml-[150px]">
-            {ourJobs?.map((job: Job) => (
-              <div className="" key={job.id}>
-                <h3>{job.title}</h3>
+
+        {ourJobs && ourJobs.length > 0 ? (
+          <div className="grid space-y-2 gap-3 md:ml-[150px]">
+            {ourJobs.map((job: Job) => (
+              <div className=" border-2 rounded-lg p-3" key={job.id}>
+                <h3 className="text-xl">
+                  <span>Job title: </span>
+                  <span className="text-blue-700">{job.title}</span>
+                </h3>
                 <p>{job.description}</p>
+                {/* <Link href={job.pdf!} target="_blank">
+                  Download pdf
+                </Link> */}
               </div>
             ))}
           </div>
-        ) : ( */}
-        <p className="mt-3 md:ml-[150px] md:text-xl text-red-[300] flex ">
-          <span className="mr-2">There are currently no job openings</span>
-          <span>
-            <Frown />
-          </span>
-        </p>
-        {/* )} */}
+        ) : (
+          <p className="mt-3 md:ml-[150px] md:text-xl text-red-[300] flex ">
+            <span className="mr-2">There are currently no job openings</span>
+            <span>
+              <Frown />
+            </span>
+          </p>
+        )}
       </div>
 
       <div className="px-3">
@@ -89,4 +95,3 @@ async function Careers() {
   );
 }
 
-export default Careers;

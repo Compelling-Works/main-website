@@ -24,35 +24,33 @@ const TeamPage = async ({
   params: {};
   searchParams: { modalOpen: string; member: string };
 }) => {
-  // const team = await getTeamMembers();
   const team = await db.select().from(teamMembers);
 
   async function clientAction(formData: FormData) {
     "use server";
 
-    const result = await deleteTeamMemberAction(formData);
+    try {
+      const result = await deleteTeamMemberAction(formData);
 
-    if (result.status === "error") {
+      toast({
+        title: "Team member deletion success",
+        description: result.message,
+        variant: "default",
+      });
+    } catch (error) {
       toast({
         title: "Team member deletion error",
-        description: `${result.message}`,
+        description: `Sorry, unable to delete team member. Please try again later!`,
         variant: "destructive",
       });
-      return;
     }
-
-    toast({
-      title: "Team member deletion success",
-      description: `${result.message}`,
-      variant: "default",
-    });
   }
 
   return (
     <div className="mb-4 px-4 mt-5 w-[1200px] container">
       <TeamMemberForm />
 
-      {team?.length > 0 ? (
+      {team && team.length > 0 ? (
         <Table className="px-3">
           <TableCaption>A list of compelling works team members.</TableCaption>
           <TableHeader>
@@ -65,30 +63,32 @@ const TeamPage = async ({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {team?.map((member: any) => (
-              <TableRow key={member.name}>
-                <TableCell className="">
-                  <Image
-                    src={member.url}
-                    height={50}
-                    width={50}
-                    alt={member.name}
-                    className="h-auto w-auto"
-                  />
-                </TableCell>
-                <TableCell>{member.name}</TableCell>
-                <TableCell>{member.role}</TableCell>
-                <TableCell className="truncate">
-                  {member.bio.profile.substring(0, 30)}
-                </TableCell>
-                <TableCell className="flex justify-center ">
-                  <form action={clientAction}>
-                    <input type="hidden" name="deleteId" value={member.id} />
-                    <DeleteButton />
-                  </form>
-                </TableCell>
-              </TableRow>
-            ))}
+            {team.map((member: any) => {
+              return (
+                <TableRow key={member.name}>
+                  <TableCell className="">
+                    <Image
+                      src={member.url}
+                      height={50}
+                      width={50}
+                      alt={member.name}
+                      className="h-auto w-auto"
+                    />
+                  </TableCell>
+                  <TableCell>{member.name}</TableCell>
+                  <TableCell>{member.role}</TableCell>
+                  <TableCell className="truncate">
+                    {member.bio.profile.substring(0, 30)}
+                  </TableCell>
+                  <TableCell className="flex justify-center ">
+                    <form action={clientAction}>
+                      <input type="hidden" name="deleteId" value={member.id} />
+                      <DeleteButton />
+                    </form>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       ) : (

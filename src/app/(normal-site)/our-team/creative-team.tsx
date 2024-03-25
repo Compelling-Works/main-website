@@ -24,7 +24,7 @@ export default function CreativeTeam({ creativeTeam }: CreativeTeam) {
                     alt={`${member.name}'s image`}
                     width="250"
                     height="250"
-                    // className="block rounded-[50%]"
+                    // className="block rounded-[50%]"co
                     // style={{
                     //   borderRadius: "50%",
                     //   display: "block",

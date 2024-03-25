@@ -73,12 +73,12 @@ export default async function ProjectsPage() {
       <Separator className="my-10 container" />
 
       <div className="my-10">
-        {allProjects.length > 0 ? (
+        {allProjects && allProjects.length > 0 && (
           <>
             {/* <Filters /> */}
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-4 container">
-              {allProjects?.map((project: Project) => (
+              {allProjects.map((project: Project) => (
                 <Card
                   key={project.id}
                   className="rounded-md hover:scale-[102%] duration-100 max-w-[450px] max-h-[800px]"
@@ -140,6 +140,10 @@ export default async function ProjectsPage() {
               ))}
             </div>
           </>
+        )}
+
+        {mostRecent ? (
+          ""
         ) : (
           <div className="mt-5 text-center">
             <h1 className="text-gray-700 text-2xl">

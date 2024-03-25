@@ -92,3 +92,18 @@ export const DonorFormSchema = z.object({
 });
 
 export type DonorFormSchemaType = z.output<typeof DonorFormSchema>;
+
+
+export const JobFormSchema = z.object({
+  title: z.string().trim().min(1, "Job title is required"),
+  description: z.string().trim().min(1, "Job description is required"),
+  endDate: z.string().trim().min(1, "Job application deadline required"),
+  pdf: z
+    .custom<FileList>(
+      (val) => val instanceof FileList,
+      "Job advert pdf is required"
+    )
+    .refine((files) => files.length > 0, "A pdf is required"),
+});
+
+export type JobFormSchemaType = z.output<typeof JobFormSchema>;

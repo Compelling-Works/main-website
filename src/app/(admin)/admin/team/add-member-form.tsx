@@ -27,21 +27,23 @@ const TeamMemberForm = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const clientAction = async (formData: FormData) => {
-    const result = await addTeamMemberAction(formData);
+    try {
+      const result = await addTeamMemberAction(formData);
 
-    if (result?.status === "error") {
+      setModalOpen(false);
+      toast({
+        title: "User creation success",
+        description: result?.message,
+      });
+    } catch (error) {
       toast({
         title: "Team member creation error",
-        description: result.message,
+        description:
+          "Sorry, unable to add team member. Please try again later!",
         variant: "destructive",
       });
       return;
     }
-    setModalOpen(false);
-    toast({
-      title: "User creation",
-      description: result?.message,
-    });
   };
 
   return (
@@ -50,14 +52,14 @@ const TeamMemberForm = () => {
         <DialogTrigger asChild>
           <Button>Add New</Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="w-[700px]">
           <DialogHeader>
             <DialogTitle className="text-center">
               Add a new team member
             </DialogTitle>
           </DialogHeader>
 
-          <form action={clientAction} className="w-full min-h-[200px]">
+          <form action={clientAction} className="min-h-[200px] w-full">
             <div className="">
               <Label htmlFor="terms">Name</Label>
               <Input type="text" name="name" />
