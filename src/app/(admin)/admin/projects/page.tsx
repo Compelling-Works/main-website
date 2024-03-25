@@ -43,7 +43,7 @@ async function Projects() {
   }
 
   return (
-    <div className="mb-2 px-4">
+    <div className="mb-2 px-4 mt-5 w-[1200px] container">
       <AddProjectForm />
 
       {myprojects.length > 0 ? (

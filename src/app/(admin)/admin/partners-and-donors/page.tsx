@@ -6,17 +6,17 @@ import AddDonorForm from "./add-donor-form";
 
 export default function PartnersAndDonors() {
   return (
-    <div className="container">
-      <h1 className="text-2xl text-center text-gray-600 font-bold">
+    <div className="mt-5 w-[1300px] container">
+      <h1 className="text-4xl text-center text-gray-600 font-semibold my-3">
         Our Partners and Donors
       </h1>
 
-      <Tabs defaultValue="partners" className="md:w-[800px] md:mx-auto mt-3">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="partners" className="">
+      <Tabs defaultValue="partners" className="mt-3">
+        <TabsList className="flex justify-between  w-[1200px]">
+          <TabsTrigger value="partners" className="w-[600px]">
             Partners
           </TabsTrigger>
-          <TabsTrigger value="donors" className="">
+          <TabsTrigger value="donors" className="w-[600px]">
             Donors
           </TabsTrigger>
         </TabsList>

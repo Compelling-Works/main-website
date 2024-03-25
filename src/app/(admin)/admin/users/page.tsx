@@ -42,10 +42,10 @@ export default async function Users() {
   }
 
   return (
-    <div className="mb-4 px-4">
+    <div className="mb-4 px-4 mt-5 w-[1200px] container">
       <AdminMemberForm />
       {myUsers && myUsers.length > 0 ? (
-        <div className="w-[1200px] container">
+        <div className="">
           <h2 className="text-center text-gray-500 font-semibold mt-4 mb-2 text-xl">
             Registered admins
           </h2>

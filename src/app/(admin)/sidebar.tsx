@@ -71,7 +71,7 @@ const AdminSidebar = () => {
               key={route.name}
               href={route.path}
               className={cn(
-                "py-3 px-4 hover:text-blue-700 hover:bg-blue-200 hover:font-bold hover:cursor-pointer transition-colors duration-200 flex gap-5",
+                "text-lg py-3 px-4 hover:text-blue-700 hover:bg-blue-200 hover:font-bold hover:cursor-pointer transition-colors duration-200 flex gap-5",
                 {
                   "text-white font-bold bg-blue-700 hover:text-white hover:bg-blue-700":
                     pathname === route.path,

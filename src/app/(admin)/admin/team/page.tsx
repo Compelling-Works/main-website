@@ -49,7 +49,7 @@ const TeamPage = async ({
   }
 
   return (
-    <div className="mb-4 px-4">
+    <div className="mb-4 px-4 mt-5 w-[1200px] container">
       <TeamMemberForm />
 
       {team?.length > 0 ? (

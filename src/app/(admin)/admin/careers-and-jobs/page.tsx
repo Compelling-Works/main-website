@@ -17,7 +17,7 @@ export default async function CareersAndJobsPage() {
   const myJobs = await db.select().from(jobs);
 
   return (
-    <div className="mb-4 px-4">
+    <div className="mb-4 px-4 w-[1300px] container mt-9">
       <JobOpeningForm />
 
       {myJobs?.length > 0 ? (

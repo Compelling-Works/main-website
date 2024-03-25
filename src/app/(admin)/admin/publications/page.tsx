@@ -14,7 +14,7 @@ import { getPublications } from "@/data-access/publications";
 async function Publications() {
   const mypublications = await getPublications();
   return (
-    <div className="mb-4 px-4">
+    <div className="mb-4 px-4 mt-5 w-[1200px] container">
       <AddPublicationForm />
 
       {mypublications?.length > 0 ? (
