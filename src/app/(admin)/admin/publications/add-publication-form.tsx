@@ -24,10 +24,10 @@ import { useToast } from "@/components/ui/use-toast";
 import FormButton from "@/components/shared/form-button";
 
 const AddPublicationForm = () => {
+  const { toast } = useToast();
+
   const [type, setType] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
-  const { toast } = useToast();
 
   const clientAction = async (formData: FormData) => {
     const result = await addPublicationAction(formData);
@@ -92,7 +92,7 @@ const AddPublicationForm = () => {
           </div>
 
           <div className="">
-            <Label htmlFor="terms">URL</Label>
+            <Label htmlFor="website url">URL</Label>
             <Input
               type="text"
               name="url"

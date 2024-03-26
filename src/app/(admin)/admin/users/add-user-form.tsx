@@ -178,7 +178,7 @@ export default function AdminMemberForm() {
             </div>
 
             <div>
-              <Label>Admin member image</Label>
+              <Label>Admin member&apos;s image</Label>
 
               <FormField
                 control={form.control}

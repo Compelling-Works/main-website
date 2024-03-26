@@ -13,7 +13,7 @@ import {
 import AddProjectForm from "./add-project-form";
 import { Project, projects } from "@/database/schema";
 import { deleteProjectAction } from "@/actions/delete-actions";
-import { toast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 
 async function Projects() {
@@ -21,6 +21,8 @@ async function Projects() {
     .select()
     .from(projects)
     .orderBy(projects.startDate);
+
+  // const { toast } = useToast();
 
   async function clientAction(formData: FormData) {
     "use server";
@@ -46,7 +48,7 @@ async function Projects() {
     <div className="mb-2 px-4 mt-5 w-[1200px] container">
       <AddProjectForm />
 
-      {myprojects.length > 0 ? (
+      {myprojects && myprojects.length > 0 ? (
         <Table className="px-3">
           <TableCaption>
             A list of projects contributed to by Compelling Works Limited.

@@ -10,14 +10,16 @@ import {
 } from "@/components/ui/table";
 import AddPublicationForm from "./add-publication-form";
 import { getPublications } from "@/data-access/publications";
+import { db } from "@/database";
+import { publications } from "@/database/schema";
 
 async function Publications() {
-  const mypublications = await getPublications();
+  const mypublications = await db.select().from(publications);
   return (
     <div className="mb-4 px-4 mt-5 w-[1200px] container">
       <AddPublicationForm />
 
-      {mypublications?.length > 0 ? (
+      {mypublications && mypublications.length > 0 ? (
         <>
           <h1 className="my-2 text-center text-2xl text-gray-600">
             Our publications
@@ -39,7 +41,7 @@ async function Publications() {
             </TableHeader>
 
             <TableBody>
-              {mypublications?.map((publication: any, index) => (
+              {mypublications.map((publication: any, index) => (
                 <TableRow key={publication.id}>
                   <TableCell className="">{index + 1}</TableCell>
                   <TableCell className="">{publication.title}</TableCell>

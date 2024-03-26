@@ -42,26 +42,24 @@ const AddDonorForm = () => {
 
   const fileRef = form.register("logo");
 
-  // const clientAction = async (formData: FormData) => {
+  const clientAction = async (formData: FormData) => {
+    try {
+      const result = await addDonorAction(formData);
 
-  //   try {
-  //     const result = await addDonorAction(formData);
-
-  //     setModalOpen(false);
-  //     toast({
-  //       title: "Donor Creation",
-  //       description: result?.message,
-  //     });
-  //   } catch (error) {
-  //     toast({
-  //       title: "Something went wrong",
-  //       description:
-  //         "Unable to add a donor at the moment. Please try again later!",
-  //       variant: "destructive",
-  //     });
-  //   }
-
-  // };
+      setModalOpen(false);
+      toast({
+        title: "Donor Creation",
+        description: result?.message,
+      });
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description:
+          "Unable to add a donor at the moment. Please try again later!",
+        variant: "destructive",
+      });
+    }
+  };
 
   async function onSubmit(data: DonorFormSchemaType) {
     const formData = new FormData();
@@ -87,11 +85,6 @@ const AddDonorForm = () => {
         variant: "destructive",
       });
     }
-
-    // if (result.status === "error") {
-
-    //   return;
-    // }
   }
 
   return (
@@ -142,7 +135,7 @@ const AddDonorForm = () => {
               </div>
 
               <div>
-                <Label>Donor's logo </Label>
+                <Label>Donor&apos;s logo </Label>
 
                 <FormField
                   control={form.control}

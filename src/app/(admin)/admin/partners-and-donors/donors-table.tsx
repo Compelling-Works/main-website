@@ -10,12 +10,13 @@ import { db } from "@/database";
 
 import Image from "next/image";
 import { deleteDonorAction } from "@/actions/delete-actions";
-import { toast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 import { donors } from "@/database/schema";
 
 export default async function DonorsTable() {
   const myDonors = await db.select().from(donors);
+  // const { toast } = useToast();
 
   async function deleteAction(formData: FormData) {
     "use server";

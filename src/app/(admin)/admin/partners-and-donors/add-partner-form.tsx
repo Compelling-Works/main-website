@@ -70,7 +70,7 @@ const AddPartnerForm = () => {
             </div>
 
             <div className="">
-              <Label htmlFor="Logo">Logo</Label>
+              <Label htmlFor="Logo">Partner&apos;s Logo</Label>
               <Input type="file" name="logo" />
             </div>
 

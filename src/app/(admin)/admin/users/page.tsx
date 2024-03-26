@@ -13,32 +13,32 @@ import { db } from "@/database";
 import AdminMemberForm from "./add-user-form";
 import { User, users } from "@/database/schema";
 import { deleteAdminUserAction } from "@/actions/delete-actions";
-import { toast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 import Image from "next/image";
 
 export default async function Users() {
   const myUsers = await db.select().from(users);
+  // const { toast } = useToast();
 
   async function clientAction(formData: FormData) {
     "use server";
 
-    const result = await deleteAdminUserAction(formData);
-
-    if (result.status === "error") {
+    try {
+      const result = await deleteAdminUserAction(formData);
       toast({
-        title: "Admin member deletion error",
+        title: "Admin member deletion success",
         description: `${result.message}`,
+        variant: "default",
+      });
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description:
+          "Sorry, unable to delete admin user. Please try again later!",
         variant: "destructive",
       });
-      return;
     }
-
-    toast({
-      title: "Admin member deletion success",
-      description: `${result.message}`,
-      variant: "default",
-    });
   }
 
   return (

@@ -224,7 +224,7 @@ const TeamMemberForm = () => {
               </div>
 
               <div>
-                <Label>Team member image</Label>
+                <Label>Team member&apos;s image</Label>
 
                 <FormField
                   control={form.control}

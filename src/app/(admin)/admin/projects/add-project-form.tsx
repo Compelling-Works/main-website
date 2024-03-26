@@ -210,7 +210,7 @@ const AddProjectForm = () => {
             </div>
 
             <div className="my-2">
-              <Label>Admin member image</Label>
+              <Label>Project&apos;s image</Label>
 
               <FormField
                 control={form.control}

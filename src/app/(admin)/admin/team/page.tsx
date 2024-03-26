@@ -11,20 +11,14 @@ import {
 import { db } from "@/database";
 
 import Image from "next/image";
-import { getTeamMembers } from "@/data-access/team-members";
 import { deleteTeamMemberAction } from "@/actions/delete-actions";
-import { toast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 import { teamMembers } from "@/database/schema";
 
-const TeamPage = async ({
-  params,
-  searchParams,
-}: {
-  params: {};
-  searchParams: { modalOpen: string; member: string };
-}) => {
+export default async function TeamPage() {
   const team = await db.select().from(teamMembers);
+  // const { toast } = useToast();
 
   async function clientAction(formData: FormData) {
     "use server";
@@ -102,4 +96,3 @@ const TeamPage = async ({
   );
 };
 
-export default TeamPage;

@@ -16,11 +16,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import editTeamMemberAction from "@/actions/edit-team-member-action";
-import TeamMemberForm from "./add-member-form";
 
 export type TeamMember = {
   [key: string]: number | string | undefined;

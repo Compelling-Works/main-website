@@ -9,13 +9,14 @@ import {
 import { db } from "@/database";
 
 import Image from "next/image";
-import { toast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 import { partners } from "@/database/schema";
 import { deletePartnerAction } from "@/actions/delete-actions";
 
 export default async function PartnersTable() {
   const myPartners = await db.select().from(partners);
+  // const { toast } = useToast();
 
   async function deleteAction(formData: FormData) {
     "use server";
