@@ -217,16 +217,8 @@ export const addTeamMemberAction = async (formData: FormData) => {
 };
 
 export const addDonorAction = async (formData: FormData) => {
-  const name = formData.get("name") as string;
-  const website = formData.get("url") as string;
-  const logo = formData.get("logo") as File;
 
-  if (!name || !website || !logo) {
-    return {
-      status: "error",
-      message: "Sorry! Please fill the missing fields and try again",
-    };
-  }
+  const logo = formData.get("logo") as File;
 
   try {
     // Getting the checksum (sha256)
@@ -240,9 +232,9 @@ export const addDonorAction = async (formData: FormData) => {
       const dbResult = await db
         .insert(donors)
         .values({
-          name,
+          name: formData.get("name") as string,
           logo: signedURL.split("?")[0],
-          website,
+          website: formData.get("url") as string,
         })
         .returning()
         .then((res) => res[0]);

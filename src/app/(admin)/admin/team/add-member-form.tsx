@@ -18,7 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { addTeamMemberAction } from "@/actions/create-actions";
 import {
   TeamMemberFormSchema,
@@ -38,6 +38,8 @@ import { Loader } from "lucide-react";
 
 const TeamMemberForm = () => {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const { toast } = useToast();
 
   const form = useForm<TeamMemberFormSchemaType>({
     resolver: zodResolver(TeamMemberFormSchema),
@@ -80,7 +82,7 @@ const TeamMemberForm = () => {
       form.reset();
     } catch (error) {
       toast({
-        title: "Team member creation error",
+        title: "Something went wrong",
         description:
           "Sorry, unable to add team member. Please try again later!",
         variant: "destructive",

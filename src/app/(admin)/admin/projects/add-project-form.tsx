@@ -27,9 +27,11 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 const AddProjectForm = () => {
+  const { toast } = useToast();
+
   const form = useForm<ProjectFormSchemaType>({
     resolver: zodResolver(ProjectFormSchema),
     defaultValues: {
@@ -60,24 +62,24 @@ const AddProjectForm = () => {
     formData.append("endDate", data.endDate);
     formData.append("image", data.image[0]);
 
-    const result = await addprojectAction(formData);
+    try {
+      const result = await addprojectAction(formData);
 
-    if (result?.status === "error") {
+      setModalOpen(false);
       toast({
-        title: "Project creation error",
-        description: result.message,
+        title: "Project creation success",
+        description: result?.message,
+        variant: "default",
+      });
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Somethign went wrong",
+        description: "Unable to add project. Please try again later!",
         variant: "destructive",
       });
       return;
     }
-
-    form.reset(); //resetting the form
-    setModalOpen(false);
-    toast({
-      title: "Project creation success",
-      description: result?.message,
-      variant: "default",
-    });
   }
 
   return (

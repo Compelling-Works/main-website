@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,6 +32,8 @@ import {
 
 export default function AdminMemberForm() {
   const [modalOpen, setModalOpen] = useState(false);
+
+  const { toast } = useToast();
 
   const form = useForm<AdminUserCreateSchemaType>({
     resolver: zodResolver(AdminUserFormSchema),
@@ -56,32 +58,27 @@ export default function AdminMemberForm() {
     formData.append("confirmPassword", data.confirmPassword);
     formData.append("image", data.image[0]);
 
-    const result = await addAdminUserAction(formData);
+    try {
+      const result = await addAdminUserAction(formData);
 
-    if (!result) {
+      setModalOpen(false);
       toast({
-        title: "User creation error",
-        description: "Unable to create user",
-        variant: "destructive",
-      });
-    }
-
-    if (result?.status === "error") {
-      toast({
-        title: "User creation error",
+        title: "User creation",
         description: result?.message,
+        variant: "default",
+      });
+
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description:
+          "Unable to create admin user account. Please try again later!",
         variant: "destructive",
       });
+
       return;
     }
-    setModalOpen(false);
-    toast({
-      title: "User creation",
-      description: result?.message,
-      variant: "default",
-    });
-
-    form.reset();
   }
 
   return (

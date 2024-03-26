@@ -91,12 +91,19 @@ export const ContactFormSchema = z.object({
 
 export type ContactFormSchemaType = z.output<typeof ContactFormSchema>;
 
+
 export const DonorFormSchema = z.object({
   name: z.string().trim().min(1, "Donor name is required"),
+  logo: z
+    .custom<FileList>(
+      (val) => val instanceof FileList,
+      "Donor logo is required"
+    )
+    .refine((files) => files.length > 0, "An image is required"),
+  website_url: z.string().trim().min(1, "Donor website url is required"),
 });
 
 export type DonorFormSchemaType = z.output<typeof DonorFormSchema>;
-
 
 export const JobFormSchema = z.object({
   title: z.string().trim().min(1, "Job title is required"),
@@ -111,3 +118,4 @@ export const JobFormSchema = z.object({
 });
 
 export type JobFormSchemaType = z.output<typeof JobFormSchema>;
+
