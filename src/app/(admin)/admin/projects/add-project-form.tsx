@@ -28,6 +28,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { revalidatePath } from "next/cache";
 
 const AddProjectForm = () => {
   const { toast } = useToast();
@@ -72,6 +73,8 @@ const AddProjectForm = () => {
         variant: "default",
       });
       form.reset();
+
+      revalidatePath("/projects");
     } catch (error) {
       toast({
         title: "Somethign went wrong",
@@ -83,7 +86,13 @@ const AddProjectForm = () => {
   }
 
   return (
-    <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+    <Dialog
+      open={modalOpen}
+      onOpenChange={(modalOpen) => {
+        setModalOpen(modalOpen);
+        form.reset();
+      }}
+    >
       <DialogTrigger asChild>
         <Button>Add New</Button>
       </DialogTrigger>

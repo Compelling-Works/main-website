@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { Project, projects } from "@/database/schema";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Filters from "./filter";
 import { db } from "@/database";
+import ProjectDescription from "./projects-description-popup";
 
 export default async function ProjectsPage() {
   const allProjects = await db.select().from(projects);
@@ -22,18 +22,24 @@ export default async function ProjectsPage() {
 
       {mostRecent && (
         <div className="w-[1100px] container grid grid-cols-2 my-10 text-xl">
-          <div className="grid gap-3 w-[500px]">
-            <Image
-              src={mostRecent.url}
-              alt={mostRecent.name}
-              width={500}
-              height={400}
-            />
+          <div className="grid gap-2 w-[500px]">
+            <div className="relative overflow-hidden h-[230px]">
+              <div className="absolute inset-0 bg-slate-900 bg-opacity-90"></div>
+              <Image
+                src={mostRecent.url ?? "/images/landing-image.jpg"}
+                width={450}
+                height={400}
+                alt={mostRecent.name}
+                className="absolute inset-0 object-cover w-full"
+              />
+            </div>
 
-            <h3 className="">
+            <p className="">
               <span>Project name: </span>
-              <span className="text-blue-700">{mostRecent.name}</span>
-            </h3>
+              <span className="text-blue-700 capitalize">
+                {mostRecent.name}
+              </span>
+            </p>
 
             <p className="">
               <span>Countries: </span>
@@ -63,10 +69,15 @@ export default async function ProjectsPage() {
             </p>
 
             <div className="grid gap-1 mt-3">
-              <p>Description</p>
-
-              <p className="text-wrap">{mostRecent.description}</p>
+              <p className="font-medium">Description</p>
+              <p className="text-wrap line-clamp-8">{mostRecent.description}</p>
             </div>
+
+            <ProjectDescription
+              key={mostRecent.name}
+              description={mostRecent.description}
+              name={mostRecent.name}
+            />
           </div>
         </div>
       )}
@@ -84,16 +95,17 @@ export default async function ProjectsPage() {
                   className="rounded-md hover:scale-[102%] duration-100 max-w-[450px] max-h-[800px]"
                 >
                   <CardContent className="p-0">
-                    <div className="content">
+                    <div className="relative overflow-hidden h-[230px]">
+                      <div className="absolute inset-0 bg-slate-900 bg-opacity-90"></div>
                       <Image
                         src={project.url ?? "/images/landing-image.jpg"}
                         width={450}
                         height={400}
                         alt="Image"
-                        className="rounded-lg p-2"
+                        className="absolute inset-0 object-cover"
                       />
-                      <div className="overlay text-left ">
-                        <h2 className=" text-white md:text-3xl">
+                      <div className="flex h-full items-center justify-center relative ">
+                        <h2 className=" text-white md:text-3xl tracking-wider capitalize">
                           {project.name}
                         </h2>
                       </div>
@@ -127,13 +139,15 @@ export default async function ProjectsPage() {
 
                       <Separator className="my-2" />
 
-                      <p className="line-clamp-4">{project.description}</p>
+                      <p className="line-clamp-5">{project.description}</p>
 
-                      {/* <div className="flex justify-center items-center">
-                        <Button size="sm" className="mt-2 mx-auto">
-                          Read more
-                        </Button>
-                      </div> */}
+                      <div className="flex justify-center items-center">
+                        <ProjectDescription
+                          key={project.name}
+                          description={project.description}
+                          name={project.name}
+                        />
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
