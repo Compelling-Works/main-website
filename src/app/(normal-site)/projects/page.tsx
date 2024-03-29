@@ -22,7 +22,7 @@ export default async function ProjectsPage() {
 
       {mostRecent && (
         <div className="w-[1100px] container grid grid-cols-2 my-10 text-xl">
-          <div className="grid gap-2 w-[500px]">
+          <div className="flex flex-col gap-2 w-[500px]">
             <div className="relative overflow-hidden h-[230px]">
               <div className="absolute inset-0 bg-slate-900 bg-opacity-90"></div>
               <Image
@@ -34,12 +34,9 @@ export default async function ProjectsPage() {
               />
             </div>
 
-            <p className="">
-              <span>Project name: </span>
-              <span className="text-blue-700 capitalize">
-                {mostRecent.name}
-              </span>
-            </p>
+            <h2 className=" text-blue-700 md:text-2xl font-semibold tracking-wider text-center capitalize">
+              {mostRecent.name}
+            </h2>
 
             <p className="">
               <span>Countries: </span>
@@ -55,16 +52,19 @@ export default async function ProjectsPage() {
 
           <div className="w-[600px]">
             <p className="">
-              <span>Implementors: </span>
+              <span className="font-medium mr-2">Implementors:</span>
+
               <span className="text-blue-700">{mostRecent.implementors}</span>
             </p>
             <p>
-              <span>Running from: </span>
-              <span className="text-blue-700 mr-3">{mostRecent.startDate}</span>
+              <span className="font-medium mr-2">From:</span>
+
+              <span className="text-blue-700">{mostRecent.startDate}</span>
             </p>
 
             <p>
-              <span>To: </span>
+              <span className="font-medium mr-2">To:</span>
+
               <span className="text-blue-700">{mostRecent.endDate}</span>
             </p>
 
@@ -104,34 +104,37 @@ export default async function ProjectsPage() {
                         alt="Image"
                         className="absolute inset-0 object-cover"
                       />
-                      <div className="flex h-full items-center justify-center relative ">
-                        <h2 className=" text-white md:text-3xl tracking-wider capitalize">
-                          {project.name}
-                        </h2>
-                      </div>
                     </div>
                     <div className="p-3">
+                      <h2 className=" text-blue-700 md:text-2xl font-semibold tracking-wider text-center capitalize">
+                        {project.name}
+                      </h2>
                       <p className="">
-                        <span>Country: </span>
+                        <span className="font-medium mr-2">Country:</span>
+
                         <span className="text-blue-700 mr-2">
                           {project.country}
                         </span>
                       </p>
                       <p className="">
-                        <span>From: </span>
+                        <span className="font-medium mr-2">From:</span>
+
                         <span className="text-blue-700 mr-2">
                           {project.startDate}
                         </span>
                       </p>
                       <p>
-                        <span>To: </span>
+                        <span className="font-medium mr-2">To:</span>
+
                         <span className="text-blue-700 mr-2">
                           {project.endDate}
                         </span>
                       </p>
 
                       <p className="text-md flex gap-2">
-                        Commissioning party:{" "}
+                        <span className="font-medium mr-2">
+                          Commissioning party:
+                        </span>
                         <span className="text-blue-700">
                           {project.commissioningParty}
                         </span>

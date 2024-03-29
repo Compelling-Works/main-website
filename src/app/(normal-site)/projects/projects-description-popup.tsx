@@ -36,7 +36,9 @@ export default function ProjectDescription({
           <DialogTitle className="text-center text-2xl font-medium">
             <span className="capitalize">{name} description</span>
           </DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          <DialogDescription className="text-lg">
+            {description}
+          </DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>
