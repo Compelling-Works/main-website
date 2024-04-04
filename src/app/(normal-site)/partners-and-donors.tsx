@@ -1,45 +1,42 @@
 import Marquee from "react-fast-marquee";
 import Image from "next/image";
+import { db } from "@/database";
+import { donors, partners } from "@/database/schema";
+import Link from "next/link";
 
-const PartnersAndDonors = () => {
+const PartnersAndDonors = async () => {
+  const _partners = await db.select().from(partners);
+  const _donors = await db.select().from(donors);
+
+  const partnersAndDonors = [..._partners, ..._donors];
+
   return (
     <Marquee className="" autoFill={true} pauseOnHover={true}>
-      <a href="https://m4health.pro/" target="_blank" rel="noopener noreferrer">
-        <Image
-          src="/images/m4h-logo-web.png"
-          className="mx-6 logo"
-          alt="m4h logo"
-          width={150}
-          height={100}
-        />
-      </a>
-
-      <a
-        href="https://www.gatesfoundation.org/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image
-          src="/images/gates-foundation.png"
-          className="mx-6 logo"
-          alt="m4h logo"
-          width={150}
-          height={100}
-        />
-      </a>
-      <a
-        href="https://www.giz.de/en/html/index.html"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image
-          src="/images/giz.png"
-          className="mx-6 logo"
-          alt="Giz logo"
-          width={150}
-          height={100}
-        />
-      </a>
+      {partnersAndDonors && partnersAndDonors.length > 0 ? (
+        partnersAndDonors.map((partnerOrDonor) => {
+          return (
+            <Link
+              href={partnerOrDonor.website!}
+              target="_blank"
+              key={partnerOrDonor.id}
+            >
+              <Image
+                src={partnerOrDonor.logo!}
+                className="mx-6 logo"
+                alt={partnerOrDonor.name}
+                width="130"
+                height="30"
+              />
+            </Link>
+          );
+        })
+      ) : (
+        <div className="mt-3">
+          <h2 className="text-center text-2xl">
+            No partners and donors at the moment
+          </h2>
+        </div>
+      )}
     </Marquee>
   );
 };
