@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const routes = [
   {
@@ -53,14 +55,26 @@ const routes = [
 ];
 const AdminSidebar = () => {
   const pathname = usePathname();
+  const session = useSession();
+
+  if (!session) {
+    return <p>Unauthenticated</p>;
+  }
+
+  const user = session.data?.user;
 
   return (
     <nav className="sticky top-[10svh] h-[90svh] border-r-2  bg-gray-50 w-[350px]">
       <div className="flex justify-center items-center flex-col p-5">
-        <User className="h-[150px] w-[200px]" />
+        {/* <User className="h-[150px] w-[200px]" /> */}
+        <Image src={user?.image!} height="100" width="100" alt={user?.name!} />
 
-        <p>Test Admin</p>
-        <p>testadmin@compelling.works</p>
+        {session.data?.user && (
+          <>
+            <p>{user?.name}</p>
+            <p>{user?.email}</p>
+          </>
+        )}
       </div>
 
       <hr />

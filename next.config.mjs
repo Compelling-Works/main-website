@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "compelling-works-websites.s3.eu-central-1.amazonaws.com",
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
   },
 };
