@@ -3,6 +3,7 @@
 import Link from "next/link";
 import {
   Book,
+  Building2,
   FileSpreadsheetIcon,
   Group,
   HeartHandshake,
@@ -55,7 +56,7 @@ const routes = [
   {
     name: "Offices",
     path: "/admin/offices",
-    // icon: <O />,
+    icon: <Building2 />,
   },
 ];
 const AdminSidebar = () => {
