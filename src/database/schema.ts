@@ -167,3 +167,19 @@ export const jobs = pgTable("jobs", {
 });
 
 export type Job = typeof jobs.$inferSelect;
+
+
+// cw offices table
+export const offices = pgTable("offices", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  country: text("country").notNull(),
+  city: text("city").notNull(),
+  plotNumber: text("plot_number").notNull(),
+  area: text("area").notNull(),
+  telephone: text("telephone").notNull(),
+  postOfficeBoxNumber: text("pobox-number").notNull(),
+  createdAt: text("created_at").default(new Date().toDateString()),
+});
+
+export type Office = typeof offices.$inferSelect;
+

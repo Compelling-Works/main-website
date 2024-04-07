@@ -19,7 +19,6 @@ import Image from "next/image";
 
 export default async function Users() {
   const myUsers = await db.select().from(users);
-  // const { toast } = useToast();
 
   async function clientAction(formData: FormData) {
     "use server";

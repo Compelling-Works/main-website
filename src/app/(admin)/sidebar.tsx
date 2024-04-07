@@ -52,6 +52,11 @@ const routes = [
     path: "/admin/careers-and-jobs",
     icon: <FileSpreadsheetIcon />,
   },
+  {
+    name: "Offices",
+    path: "/admin/offices",
+    // icon: <O />,
+  },
 ];
 const AdminSidebar = () => {
   const pathname = usePathname();

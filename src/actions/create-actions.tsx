@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import {
   donors,
   jobs,
+  offices,
   partners,
   projects,
   teamMembers,
@@ -60,55 +61,55 @@ export const addAdminUserAction = async (data: FormData) => {
 export const addprojectAction = async (data: FormData) => {
   const image = data.get("image") as File;
 
-     const formatter = new Intl.DateTimeFormat("en-UK", {
-       dateStyle: "full",
-     });
+  const formatter = new Intl.DateTimeFormat("en-UK", {
+    dateStyle: "full",
+  });
 
-     const _sd = new Date(data.get("startDate") as string).toLocaleDateString();
-     const _ed = new Date(data.get("endDate") as string).toLocaleDateString();
+  const _sd = new Date(data.get("startDate") as string).toLocaleDateString();
+  const _ed = new Date(data.get("endDate") as string).toLocaleDateString();
 
-     const startDate = formatter.format(new Date(_sd));
-     const endDate = formatter.format(new Date(_ed));
+  const startDate = formatter.format(new Date(_sd));
+  const endDate = formatter.format(new Date(_ed));
 
-     try {
-       const checksum = await computeSHA256(image);
+  try {
+    const checksum = await computeSHA256(image);
 
-       const signedURL = await getSignedURL(image, checksum);
+    const signedURL = await getSignedURL(image, checksum);
 
-       const result = await saveImage(signedURL, image);
+    const result = await saveImage(signedURL, image);
 
-       if (result.status === 200) {
-         const result = await db
-           .insert(projects)
-           .values({
-             name: data.get("name") as string,
-             category: data.get("category") as string,
-             country: data.get("country") as string,
-             startDate,
-             endDate,
-             commissioningParty: data.get("commissioningParty") as string,
-             url: signedURL.split("?")[0],
-             description: data.get("description") as string,
-             implementors: data.get("implementors") as string,
-           })
-           .returning()
-           .then((res) => res[0]);
+    if (result.status === 200) {
+      const result = await db
+        .insert(projects)
+        .values({
+          name: data.get("name") as string,
+          category: data.get("category") as string,
+          country: data.get("country") as string,
+          startDate,
+          endDate,
+          commissioningParty: data.get("commissioningParty") as string,
+          url: signedURL.split("?")[0],
+          description: data.get("description") as string,
+          implementors: data.get("implementors") as string,
+        })
+        .returning()
+        .then((res) => res[0]);
 
-         revalidatePath("/admin/projects");
+      revalidatePath("/admin/projects");
 
-         return {
-           status: "success",
-           code: 200,
-           message: `${result.name} created successfully`,
-         };
-       }
-     } catch (error) {
-       return {
-         status: "error",
-         message:
-           "Something went wrong. Unable to create project. Please try again later!",
-       };
-     }
+      return {
+        status: "success",
+        code: 200,
+        message: `${result.name} created successfully`,
+      };
+    }
+  } catch (error) {
+    return {
+      status: "error",
+      message:
+        "Something went wrong. Unable to create project. Please try again later!",
+    };
+  }
 
   // try {
   //   const result = await db
@@ -217,7 +218,6 @@ export const addTeamMemberAction = async (formData: FormData) => {
 };
 
 export const addDonorAction = async (formData: FormData) => {
-
   const logo = formData.get("logo") as File;
 
   try {
@@ -300,18 +300,49 @@ export const addPartnerAction = async (formData: FormData) => {
   }
 };
 
+export const addOfficeAction = async (formData: FormData) => {
+  // try {
+  // Getting the checksum (sha256)
+
+  const dbResult = await db
+    .insert(offices)
+    .values({
+      area: formData.get("area") as string,
+      telephone: formData.get("telephone") as string,
+      postOfficeBoxNumber: formData.get("postOfficeBoxNumber") as string,
+      city: formData.get("city") as string,
+      country: formData.get("country") as string,
+      plotNumber: formData.get("plotNumber") as string,
+    })
+    .returning()
+    .then((res) => res[0]);
+
+  revalidatePath("/amin/offices");
+
+  //   return {
+  //     status: "success",
+  //     message: ` Office created successfully`,
+  //   };
+  // } catch (error) {
+  //   return {
+  //     status: "error",
+  //     message: `Office creation failed. Try again!`,
+  //   };
+  // }
+};
+
 export const addJobOpenningAction = async (formData: FormData) => {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
 
-     const formatter = new Intl.DateTimeFormat("en-UK", {
-       dateStyle: "full",
-     });
+  const formatter = new Intl.DateTimeFormat("en-UK", {
+    dateStyle: "full",
+  });
 
-     const _ed = new Date(
-       formData.get("close-date") as string
-     ).toLocaleDateString();
-     const endDate = formatter.format(new Date(_ed));
+  const _ed = new Date(
+    formData.get("close-date") as string
+  ).toLocaleDateString();
+  const endDate = formatter.format(new Date(_ed));
 
   const pdf = formData.get("pdf") as File;
 
@@ -351,3 +382,4 @@ export const addJobOpenningAction = async (formData: FormData) => {
     };
   }
 };
+

@@ -119,3 +119,13 @@ export const JobFormSchema = z.object({
 
 export type JobFormSchemaType = z.output<typeof JobFormSchema>;
 
+export const OfficeFormSchema = z.object({
+  city: z.string().trim().min(1, "city title is required"),
+  country: z.string().trim().min(1, "country is required"),
+  telephone: z.string().trim().min(1, "office line is required"),
+  postOfficeBox: z.string().trim().min(1, "Job application deadline required"),
+  plotNumber: z.string().trim().min(1, "plot number deadline required"),
+  area: z.string().trim().min(1, "area required"),
+});
+
+export type OfficeFormSchemaType = z.output<typeof OfficeFormSchema>;
