@@ -4,6 +4,7 @@ import { db } from "@/database/index";
 import {
   donors,
   jobs,
+  offices,
   partners,
   projects,
   publications,
@@ -24,6 +25,7 @@ export default async function AdminHomePage() {
   const _donors = (await db.select().from(donors)).length;
   const _publications = (await db.select().from(publications)).length;
   const _jobs = (await db.select().from(jobs)).length;
+  const _offices = (await db.select().from(offices)).length;
 
   const data: Statistics[] = [
     { name: "Projects", data: _projects },
@@ -33,9 +35,8 @@ export default async function AdminHomePage() {
     { name: "Donors", data: _donors },
     { name: "Publications", data: _publications },
     { name: "Job Openings", data: _jobs },
+    { name: "Offices", data: _offices },
   ];
-
-  // console.log(data);
 
   return (
     <div>
