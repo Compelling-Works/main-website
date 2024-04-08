@@ -74,7 +74,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <WhatPeopleSay />
+      {/* <WhatPeopleSay /> */}
 
       {/* <Alsuite /> */}
       <div className="grid space-y-4  border-t py-3">

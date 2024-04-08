@@ -35,8 +35,8 @@ const PartnersAndDonors = async () => {
       </Marquee>
 
       {partnersAndDonors.length === 0 && (
-        <div className="mt-3">
-          <h2 className="text-center text-2xl">
+        <div className="mt-1">
+          <h2 className="text-center text-xl">
             Partners and donors not yet updated
           </h2>
         </div>
