@@ -11,33 +11,37 @@ const PartnersAndDonors = async () => {
   const partnersAndDonors = [..._partners, ..._donors];
 
   return (
-    <Marquee className="" autoFill={true} pauseOnHover={true}>
-      {partnersAndDonors && partnersAndDonors.length > 0 ? (
-        partnersAndDonors.map((partnerOrDonor) => {
-          return (
-            <Link
-              href={partnerOrDonor.website!}
-              target="_blank"
-              key={partnerOrDonor.id}
-            >
-              <Image
-                src={partnerOrDonor.logo!}
-                className="mx-6 logo"
-                alt={partnerOrDonor.name}
-                width="130"
-                height="30"
-              />
-            </Link>
-          );
-        })
-      ) : (
+    <>
+      <Marquee className="" autoFill={true} pauseOnHover={true}>
+        {partnersAndDonors &&
+          partnersAndDonors.length > 0 &&
+          partnersAndDonors.map((partnerOrDonor) => {
+            return (
+              <Link
+                href={partnerOrDonor.website!}
+                target="_blank"
+                key={partnerOrDonor.id}
+              >
+                <Image
+                  src={partnerOrDonor.logo!}
+                  className="mx-6 logo"
+                  alt={partnerOrDonor.name}
+                  width="130"
+                  height="30"
+                />
+              </Link>
+            );
+          })}
+      </Marquee>
+
+      {partnersAndDonors.length === 0 && (
         <div className="mt-3">
           <h2 className="text-center text-2xl">
             Partners and donors not yet updated
           </h2>
         </div>
       )}
-    </Marquee>
+    </>
   );
 };
 
