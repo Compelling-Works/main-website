@@ -33,7 +33,7 @@ const PartnersAndDonors = async () => {
       ) : (
         <div className="mt-3">
           <h2 className="text-center text-2xl">
-            No partners and donors at the moment
+            Partners and donors not yet updated
           </h2>
         </div>
       )}
