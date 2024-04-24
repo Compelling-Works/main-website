@@ -44,8 +44,8 @@ function Footer() {
           <FooterCard.Title>Lilongwe Office</FooterCard.Title>
           <FooterCard.Content>
             <p>P.O. Box x70</p>
-            <p>Crossroads,</p>
-            <p>Area 9, Plot 226,</p>
+            <p>Pacific Village Flat No 2,</p>
+            <p>Area 9,</p>
             <p> Lilongwe, Malawi</p>
 
             <p className="flex gap-3 justify-center mt-2">
