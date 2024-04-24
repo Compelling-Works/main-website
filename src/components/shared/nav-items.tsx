@@ -30,7 +30,7 @@ export const links = [
     href: "/our-team",
   },
   {
-    name: "Careers",
+    name: "DHEXA",
     href: "/careers",
   },
 ];

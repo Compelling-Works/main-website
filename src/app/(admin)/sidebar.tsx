@@ -49,7 +49,7 @@ const routes = [
     icon: <HeartHandshake />,
   },
   {
-    name: "Careers and Jobs",
+    name: "DHEXA and Jobs",
     path: "/admin/careers-and-jobs",
     icon: <FileSpreadsheetIcon />,
   },
