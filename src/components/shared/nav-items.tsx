@@ -17,7 +17,7 @@ export const links = [
     href: "/",
   },
   {
-    name: "About Us",
+    name: "Services",
     href: "/about-us",
   },
   {
