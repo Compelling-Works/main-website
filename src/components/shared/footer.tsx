@@ -62,7 +62,7 @@ function Footer() {
           <FooterCard.Content>
             <p>P.O.BOX 61169</p>
             <p>Vorstadt, zum Garten 19,</p>
-            <p>611169 Friedberg,</p>
+            <p>61169 Friedberg,</p>
             <p> Hessen, Germany</p>
             <p className="flex gap-3 justify-center mt-2">
               <span>
