@@ -16,11 +16,12 @@ export default function Map() {
   return (
     <div className="bg-gray-50">
       <div className="md:w-[1000px] md:mx-auto container py-10">
-        <p className="text-center md:text-2xl my-2">
-          Countries we have offered our services
+        {/* <p className="text-center md:text-2xl my-2 font-medium"> */}
+        <p className="text-center text-2xl md:text-3xl pt-3">
+          Countries where we have offered our services
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 ">
+        <div className="grid grid-cols-2 justify-items-center md:grid-cols-4 lg:grid-cols-6 ">
           <div>
             <UG title="Uganda" className="size-[100px]" />
           </div>

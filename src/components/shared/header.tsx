@@ -5,7 +5,7 @@ import MobileNav from "./mobile-nav";
 
 function Header() {
   return (
-    <header className="fixed top-0 left-0 py-5 text-lg z-10 w-full bg-[#B7CEF9] shadow-lg h-[7svh] md:h-[10svh]">
+    <header className=" fixed top-0 left-0 w-full flex text-lg z-10 bg-[#B7CEF9] shadow-lg h-[7svh] md:h-[10svh]">
       <div className="flex items-center justify-between container">
         <Link href="/" className="block">
           <Image
@@ -13,7 +13,7 @@ function Header() {
             alt="Compelling works logo"
             width={100}
             height={20}
-            className="w-full"
+            className="size-full"
           />
         </Link>
 

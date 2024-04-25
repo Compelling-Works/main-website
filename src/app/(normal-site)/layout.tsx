@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Header />
-        <main className="mt-[10svh]">{children}</main>
+        <main className="mt-[7svh] md:mt-[10svh]">{children}</main>
         <Toaster />
         <Footer />
       </body>

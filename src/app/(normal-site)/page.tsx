@@ -21,29 +21,25 @@ export default function HomePage() {
         </div>
       </div>
 
-      <section className="">
-        <div className="flex justify-center items-center flex-col bg-gray-50 py-10">
+      <section className=" bg-gray-50 px-5">
+        <div className="flex justify-center items-center flex-col  py-10">
           <h2 className="text-center uppercase md:text-3xl text-4xl font-normal">
             Our Vision
           </h2>
-          <p className="text-center md:text-xl text-md font-semibold my-3 text-gray-700">
+          <p className="text-center md:text-xl text-md font-light my-3 text-gray-700">
             We envision organizations in which reliable information is
             customarily used for decision support.
           </p>
         </div>
       </section>
 
-      <Separator className="container" />
-
       <OurCoreValues />
-
-      {/* <WhatWeDo /> */}
 
       <Map />
 
-      <div className="py-5">
-        <div className="text-center md:my-7 container">
-          <p className="md:text-2xl px-5 py-4">
+      <div className="py-5 md:container">
+        <div className="text-center md:my-7">
+          <p className="md:text-xl px-3 py-4">
             Our commitment to excellence is as unwavering as our ideas and
             deliverables. We take pride in crafting solutions that not only meet
             but exceed expectations, ensuring a seamless blend of innovation and
@@ -51,7 +47,7 @@ export default function HomePage() {
             quality meets creativity!
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 container">
+          <div className="grid grid-cols-1  md:grid-cols-4">
             <p className="flex flex-col ">
               <span className="text-xl font-semibold">
                 Project Success Rate
@@ -76,7 +72,6 @@ export default function HomePage() {
 
       {/* <WhatPeopleSay /> */}
 
-      {/* <Alsuite /> */}
       <div className="grid space-y-4  border-t py-3">
         <p className="text-center text-2xl md:text-3xl pt-3">
           Our Partners and Donors

@@ -74,7 +74,8 @@ function Footer() {
         </FooterCard>
       </footer>
       <h3 className="bg-blue-700 text-white text-center py-5 px-4 text-xl">
-        &copy; Copyright 2024 | Compelling Works Limited - All Rights Reserved
+        &copy; {new Date().getFullYear()} | Compelling Works Limited - All
+        Rights Reserved
       </h3>
     </>
   );

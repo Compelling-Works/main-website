@@ -13,7 +13,6 @@ const Alsuite = () => {
             alt="alsuite logo"
             width={150}
             height={140}
-            // className="w-full"
           />
 
           <p className="text-md mb-3">
@@ -72,7 +71,7 @@ const Alsuite = () => {
 
       <h4 className="my-2 text-xl">Companies that use Alsuite sofar</h4>
 
-      <div className="flex justify-center items-center gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 justify-items-center  gap-4">
         <Image
           src="/images/horizontal_logo.png"
           width={150}
@@ -91,12 +90,6 @@ const Alsuite = () => {
           height={100}
           alt="Mifumi health services logo"
         />
-        {/* <Image
-          src="/images/obi-works.png"
-          width={150}
-          height={100}
-          alt="FOWODE logo"
-        /> */}
       </div>
     </section>
   );
