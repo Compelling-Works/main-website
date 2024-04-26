@@ -61,26 +61,28 @@ const routes = [
 ];
 const AdminSidebar = () => {
   const pathname = usePathname();
-  const session = useSession();
+  // const session = useSession();
 
-  if (!session) {
-    return <p>Unauthenticated</p>;
-  }
+  // if (!session) {
+  //   return <p>Unauthenticated</p>;
+  // }
 
-  const user = session.data?.user;
+  // const user = session.data?.user;
 
   return (
-    <nav className="sticky top-[10svh] h-[90svh] border-r-2  bg-gray-50 w-[350px]">
+    <nav className="sticky top-[10svh] h-[90svh] border-r-2  bg-gray-50 w-[400px]">
       <div className="flex justify-center items-center flex-col p-5">
-        {/* <User className="h-[150px] w-[200px]" /> */}
-        <Image src={user?.image!} height="100" width="100" alt={user?.name!} />
+        {/* <Image src={user?.image!} height="100" width="100" alt={user?.name!} />
 
         {session.data?.user && (
           <>
             <p>{user?.name}</p>
             <p>{user?.email}</p>
           </>
-        )}
+        )} */}
+
+        <p>Sample admin</p>
+        <p>admin@compelling.works</p>
       </div>
 
       <hr />

@@ -43,6 +43,13 @@
       "when": 1712490618530,
       "tag": "0005_conscious_onslaught",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1714100838885,
+      "tag": "0006_pale_warlock",
+      "breakpoints": true
     }
   ]
 }

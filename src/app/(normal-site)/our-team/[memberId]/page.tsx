@@ -33,7 +33,7 @@ export default async function TeamMemberPage({
           alt={`The picture of${member.url}`}
           width={2560}
           height={2001}
-          className="w-full h-min-[700px]"
+          className="h-min-[700px] w-auto"
         />
 
         <div>

@@ -12,6 +12,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { registrationAction } from "@/actions/auth-actions";
 
 export default function RegisterForm() {
   const form = useForm<RegisterSchemaType>({
@@ -26,16 +27,10 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(data: RegisterSchemaType) {
-    console.log(data);
     try {
-      //  await createApplication({
-      //    name: data.name,
-      //    letter,
-      //    nationalId,
-      //    proofOfPayment,
-      //    statutoryDeclaration,
-      //    proofOfLossPoliceReference,
-      //  });
+      const result = await registrationAction(data);
+
+      console.log(result);
 
       toast({
         title: "Registration success",
@@ -43,7 +38,7 @@ export default function RegisterForm() {
         variant: "default",
       });
 
-      form.reset();
+      // form.reset();
     } catch (error) {
       toast({
         title: "Something went wrong",
@@ -55,13 +50,13 @@ export default function RegisterForm() {
   }
 
   return (
-    <div className="rounded-md bg-white p-8 shadow dark:bg-gray-900 w-[500px] ">
+    <div className="rounded-md bg-white p-8 shadow-xl dark:bg-gray-900 w-[500px] ">
       <Image
         src="/images/horizontal_logo.png"
-        width="200"
-        height="200"
+        width={200}
+        height={50}
         alt="Compelling works limited logo"
-        className="mx-auto"
+        className="w-[200px] h-auto mx-auto"
       />
 
       <div>
@@ -157,7 +152,7 @@ export default function RegisterForm() {
               <span>Already have an account?</span>
               <span>
                 <Link href="/cw-admin" className="text-blue-600">
-                  login here
+                  Login here
                 </Link>
               </span>
             </p>

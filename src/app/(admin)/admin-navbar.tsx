@@ -9,14 +9,14 @@ export default function AdminNavbar() {
   const session = useSession();
   return (
     <header className="shadow-md h-[10svh] fixed left-0 top-0 z-10 w-full">
-      <div className="flex justify-between items-center p-5 ">
-        <Link href="/admin/users">
+      <div className="flex justify-between items-center p-5 container">
+        <Link href="/admin">
           <Image
             src="/images/horizontal_logo.png"
             width={150}
-            height={100}
+            height={40}
             alt="compelling works logo"
-            className=""
+            className="w-[150px] h-auto cursor-pointer"
           />
         </Link>
 

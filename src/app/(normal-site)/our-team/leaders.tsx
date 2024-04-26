@@ -20,7 +20,9 @@ export default function Leaders({ leaders }: Leaders) {
     <div>
       {leaders.length > 0 ? (
         <div className="my-4">
-          <h3 className="text-center text-2xl mt-3">Our Leadership</h3>
+          <h3 className="text-center text-2xl md:text-3xl font-medium text-opacity-85">
+            Our Leadership
+          </h3>
           {simon && (
             <Link href={`/our-team/${simon.id}`}>
               <div className="my-5 container md:w-[1200px] grid md:grid-cols-2 gap-3 ">
@@ -29,7 +31,7 @@ export default function Leaders({ leaders }: Leaders) {
                   alt={`${simon.name}'s image`}
                   width={450}
                   height={450}
-                  className="rounded-[100%]"
+                  className="rounded-[100%] w-[450px] h-[450px]"
                 />
                 <div className="mt-5">
                   <h2 className="uppercase md:text-3xl text-xl font-medium">

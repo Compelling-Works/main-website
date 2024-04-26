@@ -4,6 +4,8 @@ import Leaders from "./leaders";
 import { db } from "@/database";
 import { teamMembers } from "@/database/schema";
 
+const dynamic = "force-dynamic";
+
 export default async function OurTeam() {
   const members = await db.select().from(teamMembers);
 

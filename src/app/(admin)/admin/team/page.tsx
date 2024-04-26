@@ -66,7 +66,7 @@ export default async function TeamPage() {
                       height={50}
                       width={50}
                       alt={member.name}
-                      className="h-auto w-auto"
+                      className="h-[50px] w-[50px]"
                     />
                   </TableCell>
                   <TableCell>{member.name}</TableCell>

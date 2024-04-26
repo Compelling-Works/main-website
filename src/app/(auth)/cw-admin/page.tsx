@@ -23,7 +23,7 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: LoginSchemaType) {
-    console.log(data);
+    // console.log(data);
     try {
       //  await createApplication({
       //    name: data.name,
@@ -52,13 +52,13 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="rounded-md bg-white p-8 shadow dark:bg-gray-900 w-[500px] ">
+    <div className="rounded-md bg-white p-8 shadow-xl dark:bg-gray-900 w-[500px] ">
       <Image
         src="/images/horizontal_logo.png"
-        width="200"
-        height="200"
+        width={200}
+        height={50}
         alt="Compelling works limited logo"
-        className="mx-auto"
+        className="w-[200px] h-auto mx-auto"
       />
 
       <div>

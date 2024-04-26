@@ -24,32 +24,32 @@ export const addAdminUserAction = async (data: FormData) => {
   const image = data.get("image") as File;
 
   try {
-    const checksum = await computeSHA256(image);
+    // const checksum = await computeSHA256(image);
 
-    const signedURL = await getSignedURL(image, checksum);
+    // const signedURL = await getSignedURL(image, checksum);
 
-    const result = await saveImage(signedURL, image);
+    // const result = await saveImage(signedURL, image);
 
-    if (result.status === 200) {
-      const dbResult = await db
-        .insert(users)
-        .values({
-          name: data.get("name") as string,
-          password: hashedPassword,
-          email: data.get("email") as string,
-          role: "user",
-          username: data.get("username") as string,
-          url: signedURL.split("?")[0],
-        })
-        .returning();
+    // if (result.status === 200) {
+    const dbResult = await db
+      .insert(users)
+      .values({
+        name: data.get("name") as string,
+        password: hashedPassword,
+        email: data.get("email") as string,
+        role: "user",
+        username: data.get("username") as string,
+        // url: signedURL.split("?")[0],
+      })
+      .returning();
 
-      revalidatePath("/admin/users");
+    revalidatePath("/admin/users");
 
-      return {
-        status: "success",
-        message: `Team member ${dbResult[0].name} created successfully`,
-      };
-    }
+    return {
+      status: "success",
+      message: `Team member ${dbResult[0].name} created successfully`,
+    };
+    // }
   } catch (error) {
     return {
       status: "error",

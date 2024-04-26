@@ -80,7 +80,7 @@ export const users = pgTable("users", {
   username: varchar("username", { length: 50 }),
   password: text("password").notNull(),
   role: varchar("role").default("user"),
-  url: text("image_url").notNull(),
+  // url: text("image_url").notNull(),
   createdAt: text("created_at").default(new Date().toDateString()),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

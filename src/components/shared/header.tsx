@@ -12,8 +12,8 @@ function Header() {
             src="/images/horizontal_logo.png"
             alt="Compelling works logo"
             width={100}
-            height={20}
-            className="size-full"
+            height={30}
+            className="w-auto h-[30px]"
           />
         </Link>
 

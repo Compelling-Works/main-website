@@ -27,10 +27,10 @@ export default async function ProjectsPage() {
               <div className="absolute inset-0 bg-slate-900 bg-opacity-90"></div>
               <Image
                 src={mostRecent.url ?? "/images/landing-image.jpg"}
-                width={450}
+                width={400}
                 height={400}
                 alt={mostRecent.name}
-                className="absolute inset-0 object-cover w-full"
+                className="absolute inset-0 object-cover w-auto h-[400px]"
               />
             </div>
 
@@ -86,23 +86,21 @@ export default async function ProjectsPage() {
       <div className="my-10">
         {allProjects && allProjects.length > 0 && (
           <>
-            {/* <Filters /> */}
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-4 container">
               {allProjects.map((project: Project) => (
                 <Card
                   key={project.id}
-                  className="rounded-md hover:scale-[102%] duration-100 max-w-[450px] max-h-[800px]"
+                  className="rounded-lg hover:scale-[102%] duration-100 max-w-[450px] max-h-[800px]"
                 >
                   <CardContent className="p-0">
                     <div className="relative overflow-hidden h-[230px]">
-                      <div className="absolute inset-0 bg-slate-900 bg-opacity-90"></div>
+                      <div className="absolute inset-0 bg-slate-900 bg-opacity-70"></div>
                       <Image
                         src={project.url ?? "/images/landing-image.jpg"}
                         width={450}
                         height={400}
                         alt="Image"
-                        className="absolute inset-0 object-cover"
+                        className="absolute inset-0 object-cover w-auto h-[400px]"
                       />
                     </div>
                     <div className="p-3">

@@ -11,6 +11,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Compelling Works Limited",
   description: "This is the official compelling works limited website",
+  icons: {
+    icon: ["/images/logo.jpeg"],
+  },
 };
 
 export default function RootLayout({
@@ -20,12 +23,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <link
-        rel="icon"
-        href="/images/logo.jpeg"
-        type="image/<generated>"
-        sizes="<generated>"
-      />
       <body className={inter.className}>
         <Header />
         <main className="mt-[7svh] md:mt-[10svh]">{children}</main>

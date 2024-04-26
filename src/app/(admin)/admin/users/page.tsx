@@ -16,6 +16,7 @@ import { deleteAdminUserAction } from "@/actions/delete-actions";
 import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 import Image from "next/image";
+import { User2 } from "lucide-react";
 
 export default async function Users() {
   const myUsers = await db.select().from(users);
@@ -69,12 +70,13 @@ export default async function Users() {
                 <TableRow key={member.id}>
                   <TableCell className="">{index + 1}</TableCell>
                   <TableCell className="">
-                    <Image
-                      src={member.url}
+                    {/* <Image
+                      src={member.url! ?? <User}
                       width="60"
                       height="60"
                       alt={member.name}
-                    />
+                    /> */}
+                    <User2 className="size-10" />
                   </TableCell>
 
                   <TableCell className="text-left">{member.name}</TableCell>
