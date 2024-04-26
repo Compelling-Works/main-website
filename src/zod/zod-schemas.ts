@@ -1,5 +1,41 @@
 import { z } from "zod";
 
+export const LoginSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .email("Enter a valid email address")
+    .endsWith("@compelling.works", "Invalid email address")
+    .min(1, "Email address is required"),
+  password: z.string().trim().min(1, "Password is required"),
+});
+
+export type LoginSchemaType = z.output<typeof LoginSchema>;
+
+export const RegisterSchema = z
+  .object({
+    name: z.string().trim().min(1, "Your name is required"),
+    username: z.string().trim().min(1, "Username is required"),
+    email: z
+      .string()
+      .trim()
+      .email("Enter a valid email address")
+      .endsWith("@compelling.works", "Invalid email address")
+      .min(1, "Email address is required"),
+    password: z
+      .string()
+      .trim()
+      .min(1, "Password is required")
+      .min(8, "Password must be at least 8 characters long"),
+    confirmPassword: z.string().trim().min(1, "Confirm password is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+export type RegisterSchemaType = z.output<typeof RegisterSchema>;
+
+
 export const AdminUserFormSchema = z
   .object({
     name: z.string().trim().min(1, "Name is required"),

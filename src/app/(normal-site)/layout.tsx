@@ -20,6 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link
+        rel="icon"
+        href="/images/logo.jpeg"
+        type="image/<generated>"
+        sizes="<generated>"
+      />
       <body className={inter.className}>
         <Header />
         <main className="mt-[7svh] md:mt-[10svh]">{children}</main>
