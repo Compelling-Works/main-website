@@ -1,8 +1,9 @@
 import PartnersAndDonors from "./partners-and-donors";
 import WhatPeopleSay from "./what-people-say";
 import { Separator } from "@/components/ui/separator";
-import Map from "./map";
+import Map from "./world-map";
 import OurCoreValues from "./core-values";
+import OurServices from "./service";
 
 export default function HomePage() {
   return (
@@ -33,9 +34,16 @@ export default function HomePage() {
         </div>
       </section>
 
+      <OurServices/>
+
       <OurCoreValues />
 
-      <Map />
+      <div className="container">
+        <h2 className="text-center uppercase md:text-3xl text-4xl font-normal">
+          Countries Of Our Services
+        </h2>
+        <Map />
+      </div>
 
       <div className="py-5 md:container">
         <div className="text-center md:my-7">
