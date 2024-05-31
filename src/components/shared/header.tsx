@@ -3,6 +3,7 @@ import Image from "next/image";
 import NavItems from "./nav-items";
 import MobileNav from "./mobile-nav";
 
+
 function Header() {
   return (
     <header className=" fixed top-0 left-0 w-full flex text-lg z-10 bg-[#B7CEF9] shadow-lg h-[7svh] md:h-[10svh]">

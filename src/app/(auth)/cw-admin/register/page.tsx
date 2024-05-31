@@ -12,41 +12,44 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { registrationAction } from "@/actions/auth-actions";
+import { registerAction } from "@/actions/auth-actions";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+  const router = useRouter();
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: "",
       email: "",
       password: "",
-      username: "",
+      // username: "",
       confirmPassword: "",
     },
   });
 
   async function onSubmit(data: RegisterSchemaType) {
-    try {
-      const result = await registrationAction(data);
+    const result = await registerAction(data);
 
-      console.log(result);
+    console.log(result);
 
-      toast({
-        title: "Registration success",
-        description: "You have successfully created an account",
-        variant: "default",
-      });
-
-      // form.reset();
-    } catch (error) {
+    if (!result.success) {
       toast({
         title: "Something went wrong",
-        description:
-          "Unable to login to the application. Please try again later ",
+        description: result.error,
         variant: "destructive",
       });
+      return;
     }
+
+    toast({
+      title: "Registration success",
+      description: "You have successfully created an account",
+      variant: "default",
+    });
+
+    form.reset();
+    router.push("/admin");
   }
 
   return (
@@ -78,15 +81,7 @@ export default function RegisterForm() {
                 </span>
               )}
             </div>
-            <div>
-              <Label htmlFor="username">Username</Label>
-              <Input {...form.register("username")} autoComplete="off" />
-              {form.formState.errors.username && (
-                <span className="text-red-600 text-xs">
-                  {form.formState.errors.username.message}
-                </span>
-              )}
-            </div>
+
             <div>
               <Label htmlFor="email">Email</Label>
               <Input
@@ -99,6 +94,7 @@ export default function RegisterForm() {
                   {form.formState.errors.email.message}
                 </span>
               )}
+              {/* <FormError error={form.formState.errors.email} /> */}
             </div>
             <div>
               <Label htmlFor="password">Password</Label>

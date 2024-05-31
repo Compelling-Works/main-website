@@ -3,8 +3,8 @@ import { Project, projects } from "@/database/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Filters from "./filter";
-import { db } from "@/database";
 import ProjectDescription from "./projects-description-popup";
+import db from "@/database";
 
 export default async function ProjectsPage() {
   const allProjects = await db.select().from(projects);

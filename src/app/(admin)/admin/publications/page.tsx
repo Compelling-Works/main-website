@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/table";
 import AddPublicationForm from "./add-publication-form";
 import { getPublications } from "@/data-access/publications";
-import { db } from "@/database";
 import { publications } from "@/database/schema";
+import db from "@/database";
 
 async function Publications() {
   const mypublications = await db.select().from(publications);

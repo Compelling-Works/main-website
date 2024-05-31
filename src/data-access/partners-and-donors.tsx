@@ -1,4 +1,4 @@
-import { db } from "@/database";
+import db from "@/database";
 import { donors, partners } from "@/database/schema";
 
 export async function getPartners() {

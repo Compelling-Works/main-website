@@ -9,7 +9,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
+import db from "@/database";
+
 
 export default async function OurOfficesPage() {
   const _offices = await db.select().from(offices);

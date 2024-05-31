@@ -6,13 +6,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
 
 import Image from "next/image";
 import { deleteDonorAction } from "@/actions/delete-actions";
 import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 import { donors } from "@/database/schema";
+import db from "@/database";
 
 export default async function DonorsTable() {
   const myDonors = await db.select().from(donors);

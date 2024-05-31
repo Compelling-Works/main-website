@@ -1,86 +1,21 @@
 import {
-  date,
   json,
   pgTable,
-  serial,
   text,
   timestamp,
   uuid,
-  primaryKey,
-  integer,
   varchar,
 } from "drizzle-orm/pg-core";
 
-// import {
-//   timestamp,
-//   pgTable,
-//   text,
-//   primaryKey,
-//   integer,
-// } from "drizzle-orm/pg-core";
-import type { AdapterAccount } from "@auth/core/adapters";
-
-export const adminUusers = pgTable("user", {
-  id: text("id").notNull().primaryKey(),
-  name: text("name"),
-  email: text("email").notNull(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
-  image: text("image"),
-});
-
-export const accounts = pgTable(
-  "account",
-  {
-    userId: text("userId")
-      .notNull()
-      .references(() => adminUusers.id, { onDelete: "cascade" }),
-    type: text("type").$type<AdapterAccount["type"]>().notNull(),
-    provider: text("provider").notNull(),
-    providerAccountId: text("providerAccountId").notNull(),
-    refresh_token: text("refresh_token"),
-    access_token: text("access_token"),
-    expires_at: integer("expires_at"),
-    token_type: text("token_type"),
-    scope: text("scope"),
-    id_token: text("id_token"),
-    session_state: text("session_state"),
-  },
-  (account) => ({
-    compoundKey: primaryKey({
-      columns: [account.provider, account.providerAccountId],
-    }),
-  })
-);
-
-export const sessions = pgTable("session", {
-  sessionToken: text("sessionToken").notNull().primaryKey(),
-  userId: text("userId")
-    .notNull()
-    .references(() => adminUusers.id, { onDelete: "cascade" }),
-  expires: timestamp("expires", { mode: "date" }).notNull(),
-});
-
-export const verificationTokens = pgTable(
-  "verificationToken",
-  {
-    identifier: text("identifier").notNull(),
-    token: text("token").notNull(),
-    expires: timestamp("expires", { mode: "date" }).notNull(),
-  },
-  (vt) => ({
-    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  })
-);
-
 // Admin users table
 export const users = pgTable("users", {
-  id: uuid("id").defaultRandom().primaryKey(),
+  // id: uuid("id").defaultRandom().primaryKey(),
+  id: text("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
   email: varchar("email", { length: 100 }).unique().notNull(),
-  username: varchar("username", { length: 50 }),
+  // username: varchar("username", { length: 50 }),
   password: text("password").notNull(),
   role: varchar("role").default("user"),
-  // url: text("image_url").notNull(),
   createdAt: text("created_at").default(new Date().toDateString()),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -168,7 +103,6 @@ export const jobs = pgTable("jobs", {
 
 export type Job = typeof jobs.$inferSelect;
 
-
 // cw offices table
 export const offices = pgTable("offices", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -183,3 +117,13 @@ export const offices = pgTable("offices", {
 
 export type Office = typeof offices.$inferSelect;
 
+export const sessionTable = pgTable("session", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id),
+  expiresAt: timestamp("expires_at", {
+    withTimezone: true,
+    mode: "date",
+  }).notNull(),
+});

@@ -1,21 +1,14 @@
-import { PostgresJsDatabase, drizzle } from "drizzle-orm/postgres-js";
+import pg from "pg";
+// import pg from "pg";
+import { NodePgDatabase, drizzle } from "drizzle-orm/node-postgres";
+
 import * as schema from "./schema";
-import postgres from "postgres";
 
-declare global {
-  var db: PostgresJsDatabase<typeof schema> | undefined;
-}
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL!,
+});
+const db = drizzle(pool, {
+  schema: schema,
+}) as NodePgDatabase<typeof schema>;
 
-let db: PostgresJsDatabase<typeof schema>;
-
-if (process.env.NODE_ENV === "production") {
-  db = drizzle(postgres(process.env.DATABASE_URL!), { schema });
-} else {
-  if (!global.db) {
-    global.db = drizzle(postgres(process.env.DATABASE_URL!), { schema });
-  }
-
-  db = global.db;
-}
-
-export { db };
+export default db;

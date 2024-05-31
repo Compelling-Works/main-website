@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   Book,
@@ -12,10 +10,15 @@ import {
   User,
   Users,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+
 import Image from "next/image";
+import { validateRequest } from "../../auth";
+import db from "@/database";
+import { users } from "@/database/schema";
+import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 
 const routes = [
   {
@@ -59,30 +62,33 @@ const routes = [
     icon: <Building2 />,
   },
 ];
-const AdminSidebar = () => {
-  const pathname = usePathname();
-  // const session = useSession();
+export default async function AdminSidebar(params: any) {
+  // const pathname = usePathname();
 
-  // if (!session) {
-  //   return <p>Unauthenticated</p>;
-  // }
+  // const headerList = headers();
+  // const pathname = headerList.get("x-current-path");
 
-  // const user = session.data?.user;
+  const { user, session } = await validateRequest();
+
+  if (!user) {
+    return redirect("/cw-admin");
+  }
+  const loggedInUser = await db
+    .select({
+      name: users.name,
+      email: users.email,
+      role: users.role,
+    })
+    .from(users)
+    .where(eq(users.id, user.id));
 
   return (
     <nav className="sticky top-[10svh] h-[90svh] border-r-2  bg-gray-50 w-[400px]">
-      <div className="flex justify-center items-center flex-col p-5">
-        {/* <Image src={user?.image!} height="100" width="100" alt={user?.name!} />
+      <div className="flex justify-center items-center flex-col p-5 text-xl">
+        <User size={120} />
 
-        {session.data?.user && (
-          <>
-            <p>{user?.name}</p>
-            <p>{user?.email}</p>
-          </>
-        )} */}
-
-        <p>Sample admin</p>
-        <p>admin@compelling.works</p>
+        <p>{loggedInUser[0].name}</p>
+        <p>{loggedInUser[0].email}</p>
       </div>
 
       <hr />
@@ -93,11 +99,11 @@ const AdminSidebar = () => {
               key={route.name}
               href={route.path}
               className={cn(
-                "text-lg py-3 px-4 hover:text-blue-700 hover:bg-blue-200 hover:font-bold hover:cursor-pointer transition-colors duration-200 flex gap-5",
-                {
-                  "text-white font-bold bg-blue-700 hover:text-white hover:bg-blue-700":
-                    pathname === route.path,
-                }
+                "text-lg py-3 px-4 hover:text-blue-700 hover:bg-blue-200 hover:font-bold hover:cursor-pointer transition-colors duration-200 flex gap-5"
+                // {
+                //   "text-white font-bold bg-blue-700 hover:text-white hover:bg-blue-700":
+                //     pathname === route.path,
+                // }
               )}
             >
               <span>{route.icon}</span>
@@ -108,6 +114,4 @@ const AdminSidebar = () => {
       </div>
     </nav>
   );
-};
-
-export default AdminSidebar;
+}

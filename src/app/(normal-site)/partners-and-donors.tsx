@@ -1,8 +1,9 @@
 import Marquee from "react-fast-marquee";
-import Image from "next/image";
-import { db } from "@/database";
+
 import { donors, partners } from "@/database/schema";
 import Link from "next/link";
+import db from "@/database";
+import Image from "next/image";
 
 const PartnersAndDonors = async () => {
   const _partners = await db.select().from(partners);

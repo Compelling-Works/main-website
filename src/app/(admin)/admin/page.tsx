@@ -1,6 +1,6 @@
 // "use client";
 
-import { db } from "@/database/index";
+import db from "@/database";
 import {
   donors,
   jobs,
@@ -39,7 +39,7 @@ export default async function AdminHomePage() {
   ];
 
   return (
-    <div>
+    <div className="container">
       <h1 className="text-3xl text-center font-semibold mt-3">
         Website statistics
       </h1>

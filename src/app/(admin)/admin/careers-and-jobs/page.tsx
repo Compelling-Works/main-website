@@ -8,10 +8,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
 
 import { Job, jobs } from "@/database/schema";
 import JobOpeningForm from "./add-job-form";
+import db from "@/database";
 
 export default async function CareersAndJobsPage() {
   const myJobs = await db.select().from(jobs);

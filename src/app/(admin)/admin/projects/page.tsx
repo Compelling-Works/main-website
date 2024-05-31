@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { db } from "@/database";
 
 import {
   Table,
@@ -15,6 +14,7 @@ import { Project, projects } from "@/database/schema";
 import { deleteProjectAction } from "@/actions/delete-actions";
 import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
+import db from "@/database";
 
 async function Projects() {
   const myprojects = await db

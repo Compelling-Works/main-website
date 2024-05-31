@@ -8,13 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
 
 import Image from "next/image";
 import { deleteTeamMemberAction } from "@/actions/delete-actions";
 import { toast, useToast } from "@/components/ui/use-toast";
 import DeleteButton from "@/components/shared/delete-button";
 import { teamMembers } from "@/database/schema";
+import db from "@/database";
 
 export default async function TeamPage() {
   const team = await db.select().from(teamMembers);

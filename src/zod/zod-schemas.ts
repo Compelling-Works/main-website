@@ -15,7 +15,7 @@ export type LoginSchemaType = z.output<typeof LoginSchema>;
 export const RegisterSchema = z
   .object({
     name: z.string().trim().min(1, "Your name is required"),
-    username: z.string().trim().min(1, "Username is required"),
+    // username: z.string().trim().min(1, "Username is required"),
     email: z
       .string()
       .trim()
@@ -34,36 +34,6 @@ export const RegisterSchema = z
     path: ["confirmPassword"],
   });
 export type RegisterSchemaType = z.output<typeof RegisterSchema>;
-
-
-export const AdminUserFormSchema = z
-  .object({
-    name: z.string().trim().min(1, "Name is required"),
-    username: z.string().trim().min(1, "Username is required"),
-
-    email: z
-      .string()
-      .trim()
-      .email("Enter a valid email address")
-      .endsWith("@compelling.works", "Invalid email address"),
-    password: z
-      .string()
-      .trim()
-      .min(6, "Password must be more than 6 characters long"),
-    confirmPassword: z.string(),
-    image: z
-      .custom<FileList>(
-        (val) => val instanceof FileList,
-        "Admin user image is required"
-      )
-      .refine((files) => files.length > 0, "An image is required"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
-
-export type AdminUserCreateSchemaType = z.output<typeof AdminUserFormSchema>;
 
 
 export const TeamMemberFormSchema = z.object({

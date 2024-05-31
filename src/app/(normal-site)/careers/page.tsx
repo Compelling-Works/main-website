@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { db } from "@/database";
 
 import { Job, jobs } from "@/database/schema";
 import { Check, Frown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import DownloadButton from "./download-button";
+import db from "@/database";
 
 export default async function Careers() {
   const ourJobs = await db.select().from(jobs);
@@ -94,4 +94,3 @@ export default async function Careers() {
     </>
   );
 }
-
