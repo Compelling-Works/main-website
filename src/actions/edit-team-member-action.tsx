@@ -1,7 +1,7 @@
 "use server";
 
 import { teamMembers } from "@/database/schema";
-import { db } from "@/database/index";
+import db from "@/database/index";
 import { revalidatePath } from "next/cache";
 
 const editTeamMemberAction = async (formData: FormData) => {

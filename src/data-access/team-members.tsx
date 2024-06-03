@@ -1,4 +1,4 @@
-import { db } from "@/database";
+import db from "@/database";
 import { teamMembers } from "@/database/schema";
 import { eq } from "drizzle-orm";
 

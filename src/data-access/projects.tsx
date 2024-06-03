@@ -1,4 +1,4 @@
-import { db } from "@/database";
+import db from "@/database";
 import { projects } from "@/database/schema";
 
 export async function getProjects() {
@@ -20,6 +20,4 @@ export async function getProjects() {
       data: undefined,
     };
   }
-
-   
 }

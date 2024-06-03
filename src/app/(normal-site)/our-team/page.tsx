@@ -1,7 +1,7 @@
 import Interns from "./interns";
 import CreativeTeam from "./creative-team";
 import Leaders from "./leaders";
-import { db } from "@/database";
+import db from "@/database";
 import { teamMembers } from "@/database/schema";
 
 const dynamic = "force-dynamic";

@@ -9,13 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
+import db from "@/database";
 
 export default async function OurOfficesPage() {
   const _offices = await db.select().from(offices);
 
   return (
-    <div className="mt-5 w-[1200px] container">
+    <div className="mt-5 container">
       <h1 className="my-2 text-3xl font-semibold text-center">Our offices</h1>
       <AddOfficeForm />
 

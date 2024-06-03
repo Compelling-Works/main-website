@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
+import db from "@/database";
 
 import { Job, jobs } from "@/database/schema";
 import JobOpeningForm from "./add-job-form";
@@ -17,7 +17,7 @@ export default async function CareersAndJobsPage() {
   const myJobs = await db.select().from(jobs);
 
   return (
-    <div className="mb-4 px-4 w-[1300px] container mt-9">
+    <div className="mb-4 px-4  container mt-9">
       <JobOpeningForm />
 
       {myJobs?.length > 0 ? (

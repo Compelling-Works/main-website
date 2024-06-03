@@ -12,8 +12,11 @@ import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { loginAction } from "@/actions/auth-actions";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const form = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -23,32 +26,26 @@ export default function LoginForm() {
   });
 
   async function onSubmit(data: LoginSchemaType) {
-    // console.log(data);
-    try {
-      //  await createApplication({
-      //    name: data.name,
-      //    letter,
-      //    nationalId,
-      //    proofOfPayment,
-      //    statutoryDeclaration,
-      //    proofOfLossPoliceReference,
-      //  });
+    const result = await loginAction(data);
 
-      toast({
-        title: "Login upload success",
-        description: "You have successfully logged into the application",
-        variant: "default",
-      });
-
-      form.reset();
-    } catch (error) {
+    if (result?.success === false) {
       toast({
         title: "Something went wrong",
-        description:
-          "Unable to login to the application. Please try again later ",
+        description: result?.error,
         variant: "destructive",
       });
+      return;
     }
+
+    toast({
+      title: "Login success",
+      description: "You have successfully logged in",
+      variant: "default",
+    });
+
+    form.reset();
+
+    router.push("/admin");
   }
 
   return (

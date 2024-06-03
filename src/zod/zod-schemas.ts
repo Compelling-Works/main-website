@@ -15,7 +15,7 @@ export type LoginSchemaType = z.output<typeof LoginSchema>;
 export const RegisterSchema = z
   .object({
     name: z.string().trim().min(1, "Your name is required"),
-    username: z.string().trim().min(1, "Username is required"),
+    // username: z.string().trim().min(1, "Username is required"),
     email: z
       .string()
       .trim()

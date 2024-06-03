@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { db } from "@/database";
+import db from "@/database";
 
 import {
   Table,
@@ -45,7 +45,7 @@ async function Projects() {
   }
 
   return (
-    <div className="mb-2 px-4 mt-5 w-[1200px] container">
+    <div className="mb-2 px-4 mt-5 container">
       <AddProjectForm />
 
       {myprojects && myprojects.length > 0 ? (

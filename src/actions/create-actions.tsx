@@ -1,7 +1,5 @@
 "use server";
 
-import bcrypt from "bcrypt";
-
 import {
   donors,
   jobs,
@@ -11,52 +9,12 @@ import {
   teamMembers,
   users,
 } from "@/database/schema";
-import { db } from "@/database/index";
 import { revalidatePath } from "next/cache";
 import { computeSHA256 } from "./computeSHA256";
 import getSignedURL from "./getSignedURL";
 import { saveImage } from "./saveImage";
 import { ProjectFormSchema } from "@/zod/zod-schemas";
-
-export const addAdminUserAction = async (data: FormData) => {
-  const userPassword = data.get("password") as string;
-  const hashedPassword = await bcrypt.hash(userPassword, 10); // hashing the password
-  const image = data.get("image") as File;
-
-  try {
-    // const checksum = await computeSHA256(image);
-
-    // const signedURL = await getSignedURL(image, checksum);
-
-    // const result = await saveImage(signedURL, image);
-
-    // if (result.status === 200) {
-    const dbResult = await db
-      .insert(users)
-      .values({
-        name: data.get("name") as string,
-        password: hashedPassword,
-        email: data.get("email") as string,
-        role: "user",
-        username: data.get("username") as string,
-        // url: signedURL.split("?")[0],
-      })
-      .returning();
-
-    revalidatePath("/admin/users");
-
-    return {
-      status: "success",
-      message: `Team member ${dbResult[0].name} created successfully`,
-    };
-    // }
-  } catch (error) {
-    return {
-      status: "error",
-      message: "Unable to create user",
-    };
-  }
-};
+import db from "@/database";
 
 export const addprojectAction = async (data: FormData) => {
   const image = data.get("image") as File;
@@ -382,4 +340,3 @@ export const addJobOpenningAction = async (formData: FormData) => {
     };
   }
 };
-

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { db } from "@/database";
+import db from "@/database";
 
 import { Job, jobs } from "@/database/schema";
 import { Check, Frown } from "lucide-react";

@@ -3,7 +3,7 @@
 import { projects, publications } from "@/database/schema";
 import getSignedURL from "./getSignedURL";
 
-import { db } from "@/database/index";
+import db from "@/database/index";
 import { revalidatePath } from "next/cache";
 
 const computeSHA256 = async (file: File) => {

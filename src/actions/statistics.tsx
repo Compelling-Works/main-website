@@ -1,6 +1,6 @@
 "use server";
 
-import { db } from "@/database/index";
+import db from "@/database/index";
 import {
   donors,
   partners,

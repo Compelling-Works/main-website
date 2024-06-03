@@ -3,7 +3,7 @@ import { Project, projects } from "@/database/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import Filters from "./filter";
-import { db } from "@/database";
+import db from "@/database";
 import ProjectDescription from "./projects-description-popup";
 
 export default async function ProjectsPage() {

@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
+import db from "@/database";
 
 import Image from "next/image";
 import { deleteTeamMemberAction } from "@/actions/delete-actions";
@@ -41,7 +41,7 @@ export default async function TeamPage() {
   }
 
   return (
-    <div className="mb-4 px-4 mt-5 w-[1200px] container">
+    <div className="mb-4 px-4 mt-5 container">
       <TeamMemberForm />
 
       {team && team.length > 0 ? (

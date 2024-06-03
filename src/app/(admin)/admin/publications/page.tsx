@@ -10,13 +10,13 @@ import {
 } from "@/components/ui/table";
 import AddPublicationForm from "./add-publication-form";
 import { getPublications } from "@/data-access/publications";
-import { db } from "@/database";
+import db from "@/database";
 import { publications } from "@/database/schema";
 
 async function Publications() {
   const mypublications = await db.select().from(publications);
   return (
-    <div className="mb-4 px-4 mt-5 w-[1200px] container">
+    <div className="mb-4 px-4 mt-5 container">
       <AddPublicationForm />
 
       {mypublications && mypublications.length > 0 ? (

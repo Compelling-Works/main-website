@@ -1,7 +1,7 @@
 import { TeamMember, teamMembers } from "@/database/schema";
 import { Linkedin } from "lucide-react";
 import Image from "next/image";
-import { db } from "@/database";
+import db from "@/database";
 import { eq, sql } from "drizzle-orm";
 
 type Bio = {

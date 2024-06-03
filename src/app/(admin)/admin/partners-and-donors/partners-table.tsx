@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/database";
+import db from "@/database";
 
 import Image from "next/image";
 import { toast, useToast } from "@/components/ui/use-toast";
@@ -23,10 +23,10 @@ export default async function PartnersTable() {
 
     const result = await deletePartnerAction(formData);
 
-    if (result.status === "error") {
+    if (result?.status === "error") {
       toast({
         title: "Donor deletion error",
-        description: `${result.message}`,
+        description: `${result?.message}`,
         variant: "destructive",
       });
       return;
@@ -34,13 +34,13 @@ export default async function PartnersTable() {
 
     toast({
       title: "Donor deletion success",
-      description: `${result.message}`,
+      description: `${result?.message}`,
       variant: "default",
     });
   }
   return (
-    <>
-      {myPartners.length > 0 ? (
+    <div>
+      {myPartners && myPartners.length > 0 ? (
         <>
           <h2 className="text-center text-gray-500 font-semibold mt-4 mb-2">
             Our esteemed partners
@@ -86,6 +86,6 @@ export default async function PartnersTable() {
           </h1>
         </div>
       )}
-    </>
+    </div>
   );
 }

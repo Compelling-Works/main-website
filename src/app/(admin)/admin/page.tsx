@@ -1,6 +1,6 @@
 // "use client";
 
-import { db } from "@/database/index";
+import db from "@/database/index";
 import {
   donors,
   jobs,

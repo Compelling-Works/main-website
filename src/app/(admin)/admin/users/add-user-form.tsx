@@ -15,70 +15,49 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addAdminUserAction } from "@/actions/create-actions";
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
-import {
-  AdminUserCreateSchemaType,
-  AdminUserFormSchema,
-} from "@/zod/zod-schemas";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { RegisterSchema, RegisterSchemaType } from "@/zod/zod-schemas";
+import { Form } from "@/components/ui/form";
+import { registerUserAction } from "@/actions/auth-actions";
 
 export default function AdminMemberForm() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const { toast } = useToast();
 
-  const form = useForm<AdminUserCreateSchemaType>({
-    resolver: zodResolver(AdminUserFormSchema),
+  const form = useForm<RegisterSchemaType>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
       name: "",
-      username: "",
       email: "",
       password: "",
       confirmPassword: "",
-      image: undefined,
     },
   });
 
-  const fileRef = form.register("image");
+  async function onSubmit(data: RegisterSchemaType) {
+    // try {
+    const result = await registerUserAction(data);
 
-  async function onSubmit(data: AdminUserCreateSchemaType) {
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("username", data.username);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("confirmPassword", data.confirmPassword);
-    formData.append("image", data.image[0]);
-
-    try {
-      const result = await addAdminUserAction(formData);
-
-      setModalOpen(false);
-      toast({
-        title: "User creation",
-        description: result?.message,
-        variant: "default",
-      });
-
-      form.reset();
-    } catch (error) {
+    if (result?.success === false) {
       toast({
         title: "Something went wrong",
-        description:
-          "Unable to create admin user account. Please try again later!",
+        description: result?.message,
         variant: "destructive",
       });
 
       return;
     }
+
+    setModalOpen(false);
+    toast({
+      title: "User aaccount creation",
+      description: result?.message,
+      variant: "destructive",
+    });
+
+    form.reset();
   }
 
   return (
@@ -95,7 +74,7 @@ export default function AdminMemberForm() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full min-h-[200px]"
+            className=" min-h-[200px]"
           >
             <div className="">
               <Label htmlFor="name">Name</Label>
@@ -109,21 +88,6 @@ export default function AdminMemberForm() {
               {form.formState.errors.name && (
                 <span className="text-red-600 text-xs">
                   {form.formState.errors.name.message}
-                </span>
-              )}
-            </div>
-            <div className="my-2">
-              <Label htmlFor="username">Username</Label>
-              <Input
-                type="text"
-                {...form.register("username")}
-                className={cn("w-full", {
-                  "ring-1 ring-red-600": form.formState.errors.username,
-                })}
-              />
-              {form.formState.errors.username && (
-                <span className="text-red-600 text-xs">
-                  {form.formState.errors.username.message}
                 </span>
               )}
             </div>
@@ -177,25 +141,6 @@ export default function AdminMemberForm() {
               )}
             </div>
 
-            <div>
-              <Label>Admin member&apos;s image</Label>
-
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormControl>
-                        <Input type="file" {...fileRef} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
-            </div>
-
             <Button
               disabled={form.formState.isSubmitting}
               className={cn("w-full mt-2", {
@@ -206,10 +151,10 @@ export default function AdminMemberForm() {
               {form.formState.isSubmitting ? (
                 <>
                   <Loader className="size-4 animate-spin mr-2" />
-                  <span className="mr-3">Creating user</span>
+                  <span className="mr-3">Creating user account...</span>
                 </>
               ) : (
-                "Create User"
+                "Create user account"
               )}
             </Button>
           </form>
@@ -217,4 +162,4 @@ export default function AdminMemberForm() {
       </DialogContent>
     </Dialog>
   );
-};
+}
